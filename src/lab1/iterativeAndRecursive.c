@@ -19,6 +19,7 @@ int main(int argc, char const *argv[])
 
 void recursive_reverse() {
     int c;
+
     if((c = getchar()) == '\n') return;
     recursive_reverse();
     putchar(c);
@@ -28,10 +29,12 @@ void iterative_reverse() {
         int *char_array = malloc(sizeof(char)*100);
         int c;
         int i = 0;
+
         while((c= getchar()) != '\n')
             char_array[i++] = c;
 
         for(i = i - 1; i >= 0; i--)
             putchar(char_array[i]);
+
         free(char_array);
 }
