@@ -40,6 +40,21 @@ public class StackWithLinkedList {
         return n;
     }
 
+    /* to be implemented
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (char item : this) {
+            s.append("[");
+            s.append(item);
+            s.append("]");
+            s.append(", ");
+        }
+        return s.toString();
+    }
+     */
+
+
+
     public static void main(String[] args) {
         StackWithLinkedList stack = new StackWithLinkedList();
         StdOut.print("Enter characters to be reversed\n");
