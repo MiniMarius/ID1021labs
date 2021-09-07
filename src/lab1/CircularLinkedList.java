@@ -13,40 +13,58 @@ public class CircularLinkedList implements Iterable<String> {
     private static class Node {
         private String item;
         private Node next;
+        private Node previous;
     }
 
 
     public void enqueueBack(String item) {
-        // adds item to end of list/queue
-        Node oldlast = last;
-        last = new Node();
-        last.item = item;
-        last.next = null;
-        if (isEmpty())
-            first = last;
-        else
-            oldlast.next = last;
+        if (first == null) {
+            Node newNode = new Node();
+            newNode.item = item;
+            newNode.next = newNode;
+            newNode.previous = newNode;
+            first = newNode; //points to first element instead of null, thus making it circular
+            return;
+        }
+        Node newNode = new Node();
+        last = first.previous;
+        newNode.item = item;
+        newNode.next = first; //next of new node is the first since we're adding behind the first one
+        first.previous = newNode; //previous of first one is this new node we're adding
+        newNode.previous = last; // previous of this new node is the last one
+        last.next = newNode; //next of old last is this new node
+
         size++;
     }
 
     public void enqueueFront(String item) {
-        Node oldFirst = first;
-        first = new Node();
-        first.item = item;
-        first.next = oldFirst;
-        if (isEmpty()) {
-            last = first;
-        }
-        last.next = first;
-        size++;
+        last = first.previous;
+
+        Node newNode = new Node();
+        newNode.item = item;
+        newNode.next = first;
+        newNode.previous = last;
+
+        last.next = newNode;
+        first.previous = newNode;
+        first = newNode;
     }
 
-    public String dequeue() {
+    public String dequeueFront() {
         // removes item from beginning of the list/queue
-        if (isEmpty()) last = null;
+        String item = first.item;
+        first = first.next;
         size--;
-        return last.item;
+        return item;
 
+    }
+
+    public String dequeueBack() {
+        // removes item from beginning of the list/queue
+        String item = last.item;
+        last = last.previous;
+        size--;
+        return item;
     }
 
     public boolean isEmpty() {
@@ -99,9 +117,5 @@ public class CircularLinkedList implements Iterable<String> {
         StdOut.println("(" + q.size() + " left on queue)");
         StdOut.print(q + "\n");
 
-        while (!q.isEmpty()) {
-            q.dequeue();
-            StdOut.print(q + "\n");
-        }
     }
 }
