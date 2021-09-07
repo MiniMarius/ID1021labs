@@ -27,7 +27,6 @@ public class GenericFIFOQueue implements Iterable<String> {
         else
             oldlast.next = last;
         size++;
-
     }
 
     public String dequeue() {
@@ -80,11 +79,10 @@ public class GenericFIFOQueue implements Iterable<String> {
     }
 
 
-
     public static void main(String[] args) {
         GenericFIFOQueue q = new GenericFIFOQueue();
-        while (!StdIn.isEmpty())
-        {
+        StdOut.print("Enter strings to be added to back of queue");
+        while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
             q.enqueue(item);
             StdOut.print(q + "\n");

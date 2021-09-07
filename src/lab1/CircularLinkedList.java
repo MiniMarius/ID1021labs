@@ -1,2 +1,107 @@
-package lab1;public class CircularLinkedList {
+package lab1;
+
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
+
+import java.util.Iterator;
+
+public class CircularLinkedList implements Iterable<String> {
+    private Node first;
+    private Node last;
+    private int size;
+
+    private static class Node {
+        private String item;
+        private Node next;
+    }
+
+
+    public void enqueueBack(String item) {
+        // adds item to end of list/queue
+        Node oldlast = last;
+        last = new Node();
+        last.item = item;
+        last.next = null;
+        if (isEmpty())
+            first = last;
+        else
+            oldlast.next = last;
+        size++;
+    }
+
+    public void enqueueFront(String item) {
+        Node oldFirst = first;
+        first = new Node();
+        first.item = item;
+        first.next = oldFirst;
+        if (isEmpty()) {
+            last = first;
+        }
+        last.next = first;
+        size++;
+    }
+
+    public String dequeue() {
+        // removes item from beginning of the list/queue
+        if (isEmpty()) last = null;
+        size--;
+        return last.item;
+
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (String item : this) {
+            s.append("[");
+            s.append(item);
+            s.append("]");
+            s.append(", ");
+        }
+        return s.toString();
+    }
+
+    public Iterator<String> iterator() {
+        return new ListIterator();
+    }
+
+    private class ListIterator implements Iterator<String> {
+        private Node current = last;
+
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        public String next() {
+            String item = current.item;
+            current = current.next;
+            return item + " ";
+        }
+    }
+
+    public static void main(String[] args) {
+        CircularLinkedList q = new CircularLinkedList();
+        StdOut.print("Enter strings to be added to back of queue");
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+            q.enqueueBack(item);
+            StdOut.print(q + "\n");
+        }
+
+        StdOut.println("(" + q.size() + " left on queue)");
+        StdOut.print(q + "\n");
+
+        while (!q.isEmpty()) {
+            q.dequeue();
+            StdOut.print(q + "\n");
+        }
+    }
 }

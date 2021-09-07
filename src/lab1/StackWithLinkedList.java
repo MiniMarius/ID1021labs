@@ -75,7 +75,6 @@ public class StackWithLinkedList implements Iterable<Character> {
     }
 
 
-
     public static void main(String[] args) {
         StackWithLinkedList stack = new StackWithLinkedList();
         StdOut.print("Enter characters to be reversed\n");
