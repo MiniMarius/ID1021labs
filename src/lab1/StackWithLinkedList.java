@@ -3,12 +3,15 @@ package lab1;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class StackWithLinkedList {
+import java.util.Iterator;
+
+public class StackWithLinkedList implements Iterable<Character> {
     private Node first;
     private int n;
 
+
     private static class Node {
-        private char item;
+        private Character item;
         private Node next;
     }
 
@@ -17,7 +20,7 @@ public class StackWithLinkedList {
         n = 0;
     }
 
-    public void push(char item) {
+    public void push(Character item) {
         Node oldfirst = first;
         first = new Node();
         first.item = item;
@@ -25,7 +28,7 @@ public class StackWithLinkedList {
         n++;
     }
 
-    public char pop() {
+    public Character pop() {
         Character item = first.item;
         first = first.next;
         n--;
@@ -40,10 +43,10 @@ public class StackWithLinkedList {
         return n;
     }
 
-    /* to be implemented
+
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (char item : this) {
+        for (Character item : this) {
             s.append("[");
             s.append(item);
             s.append("]");
@@ -51,7 +54,25 @@ public class StackWithLinkedList {
         }
         return s.toString();
     }
-     */
+
+
+    public Iterator<Character> iterator() {
+        return new ListIterator();
+    }
+
+    private class ListIterator implements Iterator<Character> {
+        private Node current = first;
+
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        public Character next() {
+            Character item = current.item;
+            current = current.next;
+            return item;
+        }
+    }
 
 
 
@@ -59,10 +80,12 @@ public class StackWithLinkedList {
         StackWithLinkedList stack = new StackWithLinkedList();
         StdOut.print("Enter characters to be reversed\n");
         while (!StdIn.isEmpty()) {
-            char item = StdIn.readChar();
+            Character item = StdIn.readChar();
             stack.push(item);
         }
         StdOut.println("(" + stack.size() + " left on stack)");
+        StdOut.print(stack);
+
         while (!stack.isEmpty()) {
             StdOut.print(stack.pop());
         }

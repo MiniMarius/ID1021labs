@@ -3,10 +3,12 @@ package lab1;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class GenericFIFOQueue {
+import java.util.Iterator;
+
+public class GenericFIFOQueue implements Iterable<String> {
     private Node first;
     private Node last;
-    private int n;
+    private int size;
 
     private static class Node {
         private String item;
@@ -20,9 +22,11 @@ public class GenericFIFOQueue {
         last = new Node();
         last.item = item;
         last.next = null;
-        if (isEmpty()) first = last;
-        else oldlast.next = last;
-        n++;
+        if (isEmpty())
+            first = last;
+        else
+            oldlast.next = last;
+        size++;
 
     }
 
@@ -30,10 +34,11 @@ public class GenericFIFOQueue {
         // removes item from beginning of the list/queue
         String item = first.item;
         first = first.next;
-        if (isEmpty()) last = null;
-        n--;
+        if (isEmpty()) {
+            last = null;
+        }
+        size--;
         return item;
-
     }
 
     public boolean isEmpty() {
@@ -42,8 +47,39 @@ public class GenericFIFOQueue {
     }
 
     public int size() {
-        return n;
+        return size;
     }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (String item : this) {
+            s.append("[");
+            s.append(item);
+            s.append("]");
+            s.append(", ");
+        }
+        return s.toString();
+    }
+
+    public Iterator<String> iterator() {
+        return new ListIterator();
+    }
+
+    private class ListIterator implements Iterator<String> {
+        private Node current = first;
+
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        public String next() {
+            String item = current.item;
+            current = current.next;
+            return item;
+        }
+    }
+
+
 
     public static void main(String[] args) {
         GenericFIFOQueue q = new GenericFIFOQueue();
@@ -51,9 +87,14 @@ public class GenericFIFOQueue {
         {
             String item = StdIn.readString();
             q.enqueue(item);
+            StdOut.print(q + "\n");
         }
         StdOut.println("(" + q.size() + " left on queue)");
-        while (!q.isEmpty())
-            StdOut.print(q.dequeue() + " ");
+        StdOut.print(q + "\n");
+
+        while (!q.isEmpty()) {
+            q.dequeue();
+            StdOut.print(q + "\n");
+        }
     }
 }
