@@ -30,10 +30,10 @@ public class CircularLinkedList implements Iterable<String> {
         }
         Node newNode = new Node();
         newNode.item = item;
-        newNode.next = first; //next of new node is the first since we're adding behind the first one
-        first.previous = newNode; //previous of first one is this new node we're adding
-        newNode.previous = last; // previous of this new node is the last one
-        last.next = newNode; //next of old last is this new node
+        newNode.next = first; //circular pointer from back to front
+        first.previous = newNode; //circular pointer from first to new node ie back of queue
+        newNode.previous = last;
+        last.next = newNode;
         last = newNode;
 
         size++;
@@ -41,21 +41,20 @@ public class CircularLinkedList implements Iterable<String> {
 
     public void enqueueFront(String item) {
         last = first.previous;
-
         Node newNode = new Node();
         newNode.item = item;
         newNode.next = first;
-        newNode.previous = last;
-
-        last.next = newNode;
+        newNode.previous = last; //circular pointer from front to back
+        last.next = newNode; //circular pointer from back to front
         first.previous = newNode;
         first = newNode;
+        size++;
     }
 
     public String dequeueFront() {
-        // removes item from beginning of the list/queue
         String item = first.item;
         first = first.next;
+        first.previous = last;
         last.next = first;
         size--;
         return item;
@@ -63,7 +62,6 @@ public class CircularLinkedList implements Iterable<String> {
     }
 
     public String dequeueBack() {
-        // removes item from beginning of the list/queue
         String item = last.item;
         last = last.previous;
         last.next = first;
@@ -83,11 +81,11 @@ public class CircularLinkedList implements Iterable<String> {
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (String item : this) {
-                s.append("[");
-                s.append(item);
-                s.append("]");
-                s.append(", ");
-            }
+            s.append("[");
+            s.append(item);
+            s.append("]");
+            s.append(", ");
+        }
         return s.toString();
     }
 
@@ -121,9 +119,9 @@ public class CircularLinkedList implements Iterable<String> {
             q.enqueueBack(item);
             StdOut.print(q + "\n");
         }
-        q.enqueueFront("kebab");
-        q.enqueueFront("funkar det");
-        q.enqueueFront("såsen också");
+        q.enqueueFront("front");
+        q.enqueueFront("newfront");
+        q.dequeueBack();
         StdOut.println("(" + q.size() + " left on queue)");
         StdOut.print(q + "\n");
     }

@@ -17,28 +17,35 @@ public class GenericFIFOQueue implements Iterable<String> {
 
 
     public void enqueue(String item) {
-        // adds item to end of list/queue
-        Node oldlast = last;
-        last = new Node();
-        last.item = item;
-        last.next = null;
-        if (isEmpty())
-            first = last;
-        else
-            oldlast.next = last;
+        if (isEmpty()) {
+            Node newNode = new Node();
+            newNode.item = item;
+            newNode.next = newNode;
+            first = newNode; //points to first element instead of null, thus making it circular
+            last = newNode;
+            size++;
+            return;
+        }
+        Node newNode = new Node();
+        newNode.item = item;
+        newNode.next = first; //circular pointer from back to front
+        last.next = newNode;
+        last = newNode;
         size++;
     }
 
-    public String dequeue() {
-        // removes item from beginning of the list/queue
-        String item = first.item;
-        first = first.next;
-        if (isEmpty()) {
-            last = null;
+        public String dequeue() {
+            // removes item from beginning of the list/queue
+            String item = first.item;
+            first = first.next;
+            if (isEmpty()) {
+                last.next = null;
+            }
+            else
+                last.next = first;
+            size--;
+            return item;
         }
-        size--;
-        return item;
-    }
 
     public boolean isEmpty() {
         return first == null;
@@ -66,18 +73,21 @@ public class GenericFIFOQueue implements Iterable<String> {
 
     private class ListIterator implements Iterator<String> {
         private Node current = first;
+        private boolean completedLoop;
 
         public boolean hasNext() {
-            return current != null;
+            return current != null && !completedLoop;
         }
 
         public String next() {
+            if (current.next == first)
+                completedLoop = true;
+
             String item = current.item;
             current = current.next;
             return item;
         }
     }
-
 
     public static void main(String[] args) {
         GenericFIFOQueue q = new GenericFIFOQueue();
