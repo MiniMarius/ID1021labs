@@ -121,8 +121,10 @@ public class CircularLinkedList implements Iterable<String> {
         }
         q.enqueueFront("front");
         q.enqueueFront("newfront");
-        q.dequeueBack();
-        StdOut.println("(" + q.size() + " left on queue)");
+        q.dequeueFront();
         StdOut.print(q + "\n");
+        q.dequeueBack();
+        StdOut.print(q + "\n");
+        StdOut.println("(" + q.size() + " left on queue)");
     }
 }

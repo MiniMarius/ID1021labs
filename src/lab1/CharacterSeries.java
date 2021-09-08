@@ -1,2 +1,4 @@
-package lab1;public class CharacterSeries {
+package lab1;
+
+public class CharacterSeries {
 }
