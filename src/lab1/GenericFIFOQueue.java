@@ -38,8 +38,11 @@ public class GenericFIFOQueue implements Iterable<String> {
             // removes item from beginning of the list/queue
             String item = first.item;
             first = first.next;
-            if (isEmpty()) {
+            if (size == 1) {
+                first.next = null;
                 last.next = null;
+                first = null;
+                last = null;
             }
             else
                 last.next = first;
@@ -57,6 +60,9 @@ public class GenericFIFOQueue implements Iterable<String> {
     }
 
     public String toString() {
+        if (isEmpty()) {
+            return "Queue is empty";
+        }
         StringBuilder s = new StringBuilder();
         for (String item : this) {
             s.append("[");
@@ -73,7 +79,7 @@ public class GenericFIFOQueue implements Iterable<String> {
 
     private class ListIterator implements Iterator<String> {
         private Node current = first;
-        private boolean completedLoop;
+        private boolean completedLoop = false;
 
         public boolean hasNext() {
             return current != null && !completedLoop;
@@ -100,9 +106,10 @@ public class GenericFIFOQueue implements Iterable<String> {
         StdOut.println("(" + q.size() + " left on queue)");
         StdOut.print(q + "\n");
 
-        while (!q.isEmpty()) {
-            q.dequeue();
-            StdOut.print(q + "\n");
-        }
+        q.dequeue();
+        StdOut.print(q + "\n");
+        q.dequeue();
+        StdOut.print(q + "\n");
+
     }
 }
