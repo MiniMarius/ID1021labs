@@ -36,9 +36,11 @@ public class GenericFIFOQueue implements Iterable<String> {
 
         public String dequeue() {
             // removes item from beginning of the list/queue
+            if (isEmpty())
+                return null;
             String item = first.item;
             first = first.next;
-            if (size == 1) {
+            if (size() == 1) {
                 first.next = null;
                 last.next = null;
                 first = null;

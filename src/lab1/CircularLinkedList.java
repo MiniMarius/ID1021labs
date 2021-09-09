@@ -52,19 +52,39 @@ public class CircularLinkedList implements Iterable<String> {
     }
 
     public String dequeueFront() {
+        if (isEmpty())
+            return null;
         String item = first.item;
         first = first.next;
-        first.previous = last;
-        last.next = first;
+        if (size() == 1) {
+            first.next = null;
+            first.previous = null;
+            last.next = null;
+            first = null;
+            last = null;
+        }
+        else {
+            first.previous = last;
+            last.next = first;
+        }
         size--;
         return item;
-
     }
 
     public String dequeueBack() {
+        if (isEmpty())
+            return null;
         String item = last.item;
         last = last.previous;
-        last.next = first;
+        if (size() == 1) {
+            first.next = null;
+            first.previous = null;
+            last.next = null;
+            first = null;
+            last = null;
+        }
+        else
+            last.next = first;
         size--;
         return item;
     }
@@ -79,6 +99,9 @@ public class CircularLinkedList implements Iterable<String> {
     }
 
     public String toString() {
+        if (isEmpty()) {
+            return "Queue is empty";
+        }
         StringBuilder s = new StringBuilder();
         for (String item : this) {
             s.append("[");
@@ -123,7 +146,9 @@ public class CircularLinkedList implements Iterable<String> {
         q.enqueueFront("newfront");
         q.dequeueFront();
         StdOut.print(q + "\n");
-        q.dequeueBack();
+        q.dequeueFront();
+        StdOut.print(q + "\n");
+        q.dequeueFront();
         StdOut.print(q + "\n");
         StdOut.println("(" + q.size() + " left on queue)");
     }
