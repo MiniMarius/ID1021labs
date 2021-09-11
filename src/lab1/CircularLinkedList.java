@@ -10,7 +10,7 @@ public class CircularLinkedList implements Iterable<String> {
     private Node last;
     private int size;
 
-    private static class Node {
+    private class Node {
         private String item;
         private Node next;
         private Node previous;
@@ -62,8 +62,7 @@ public class CircularLinkedList implements Iterable<String> {
             last.next = null;
             first = null;
             last = null;
-        }
-        else {
+        } else {
             first.previous = last;
             last.next = first;
         }
@@ -82,8 +81,7 @@ public class CircularLinkedList implements Iterable<String> {
             last.next = null;
             first = null;
             last = null;
-        }
-        else
+        } else
             last.next = first;
         size--;
         return item;
@@ -142,14 +140,19 @@ public class CircularLinkedList implements Iterable<String> {
             q.enqueueBack(item);
             StdOut.print(q + "\n");
         }
-        q.enqueueFront("front");
-        q.enqueueFront("newfront");
-        q.dequeueFront();
+
+        StdOut.print("adding \"first\" to first of queue \n");
+        q.enqueueFront("first");
         StdOut.print(q + "\n");
-        q.dequeueFront();
-        StdOut.print(q + "\n");
+
+        StdOut.print("dequeuing 1 from front \n");
         q.dequeueFront();
         StdOut.print(q + "\n");
         StdOut.println("(" + q.size() + " left on queue)");
+        StdOut.print("dequeuing whole circular list \n");
+        while (!q.isEmpty()) {
+            q.dequeueBack();
+            StdOut.print(q + "\n");
+        }
     }
 }
