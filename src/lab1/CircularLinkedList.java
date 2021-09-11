@@ -102,10 +102,17 @@ public class CircularLinkedList implements Iterable<String> {
         }
         StringBuilder s = new StringBuilder();
         for (String item : this) {
-            s.append("[");
-            s.append(item);
-            s.append("]");
-            s.append(", ");
+            if (item.equals(last.item)) {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+            }
+            else {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+                s.append(", ");
+            }
         }
         return s.toString();
     }

@@ -34,23 +34,22 @@ public class GenericFIFOQueue<Item> implements Iterable<Item> {
         size++;
     }
 
-        public Item dequeue() {
-            // removes item from beginning of the list/queue
-            if (isEmpty())
-                return null;
-            Item item = first.item;
-            first = first.next;
-            if (size() == 1) {
-                first.next = null;
-                last.next = null;
-                first = null;
-                last = null;
-            }
-            else
-                last.next = first;
-            size--;
-            return item;
-        }
+    public Item dequeue() {
+        // removes item from beginning of the list/queue
+        if (isEmpty())
+            return null;
+        Item item = first.item;
+        first = first.next;
+        if (size() == 1) {
+            first.next = null;
+            last.next = null;
+            first = null;
+            last = null;
+        } else
+            last.next = first;
+        size--;
+        return item;
+    }
 
     public boolean isEmpty() {
         return first == null;
@@ -67,10 +66,17 @@ public class GenericFIFOQueue<Item> implements Iterable<Item> {
         }
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
-            s.append("[");
-            s.append(item);
-            s.append("]");
-            s.append(", ");
+            if (item.equals(last.item)) {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+            }
+            else {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+                s.append(", ");
+            }
         }
         return s.toString();
     }
@@ -108,7 +114,7 @@ public class GenericFIFOQueue<Item> implements Iterable<Item> {
         StdOut.println("(" + q.size() + " left on queue)");
         StdOut.print(q + "\n");
 
-        while (!(q.isEmpty())){
+        while (!(q.isEmpty())) {
             q.dequeue();
             StdOut.print(q + "\n");
         }
