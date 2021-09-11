@@ -5,18 +5,18 @@ import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
 
-public class GenericFIFOQueue implements Iterable<String> {
+public class GenericFIFOQueue<Item> implements Iterable<Item> {
     private Node first;
     private Node last;
     private int size;
 
-    private static class Node {
-        private String item;
+    private class Node {
+        private Item item;
         private Node next;
     }
 
 
-    public void enqueue(String item) {
+    public void enqueue(Item item) {
         if (isEmpty()) {
             Node newNode = new Node();
             newNode.item = item;
@@ -34,11 +34,11 @@ public class GenericFIFOQueue implements Iterable<String> {
         size++;
     }
 
-        public String dequeue() {
+        public Item dequeue() {
             // removes item from beginning of the list/queue
             if (isEmpty())
                 return null;
-            String item = first.item;
+            Item item = first.item;
             first = first.next;
             if (size() == 1) {
                 first.next = null;
@@ -66,7 +66,7 @@ public class GenericFIFOQueue implements Iterable<String> {
             return "Queue is empty";
         }
         StringBuilder s = new StringBuilder();
-        for (String item : this) {
+        for (Item item : this) {
             s.append("[");
             s.append(item);
             s.append("]");
@@ -75,11 +75,11 @@ public class GenericFIFOQueue implements Iterable<String> {
         return s.toString();
     }
 
-    public Iterator<String> iterator() {
+    public Iterator<Item> iterator() {
         return new ListIterator();
     }
 
-    private class ListIterator implements Iterator<String> {
+    private class ListIterator implements Iterator<Item> {
         private Node current = first;
         private boolean completedLoop = false;
 
@@ -87,18 +87,18 @@ public class GenericFIFOQueue implements Iterable<String> {
             return current != null && !completedLoop;
         }
 
-        public String next() {
+        public Item next() {
             if (current.next == first)
                 completedLoop = true;
 
-            String item = current.item;
+            Item item = current.item;
             current = current.next;
             return item;
         }
     }
 
     public static void main(String[] args) {
-        GenericFIFOQueue q = new GenericFIFOQueue();
+        GenericFIFOQueue<String> q = new GenericFIFOQueue<String>();
         StdOut.print("Enter strings to be added to back of queue");
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
@@ -108,10 +108,9 @@ public class GenericFIFOQueue implements Iterable<String> {
         StdOut.println("(" + q.size() + " left on queue)");
         StdOut.print(q + "\n");
 
-        q.dequeue();
-        StdOut.print(q + "\n");
-        q.dequeue();
-        StdOut.print(q + "\n");
-
+        while (!(q.isEmpty())){
+            q.dequeue();
+            StdOut.print(q + "\n");
+        }
     }
 }
