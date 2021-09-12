@@ -36,16 +36,13 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
     }
 
     public Item dequeue() {
-        if (isEmpty())
-            return null;
         Item item = head.item;
         if (size() == 1) {
             head = null;
         } else {
             Node<Item> last = head.previous;
-            head = head.next;
-            last.next = head;
-            head.previous = last;
+            last.previous.next = head;
+            head.previous = last.previous;
         }
         size--;
         return item;
@@ -61,23 +58,15 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
     }
 
     public String toString() {
-        Iterator<Item> iter = iterator();
         if (isEmpty()) {
             return "Queue is empty";
         }
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
-            if (iter.hasNext()) {
                 s.append("[");
                 s.append(item);
                 s.append("]");
                 s.append(", ");
-            }
-            else {
-                s.append("[");
-                s.append(item);
-                s.append("]");
-            }
         }
         return s.toString();
     }
