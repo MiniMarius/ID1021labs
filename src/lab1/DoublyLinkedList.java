@@ -6,31 +6,33 @@ import edu.princeton.cs.algs4.StdOut;
 import java.util.Iterator;
 
 public class GenericFIFOQueue<Item> implements Iterable<Item> {
-    private Node first;
-    private Node last;
+    private Node<Item> head;
     private int size;
 
-    private class Node {
+    private static class Node<Item> {
         private Item item;
-        private Node next;
+        private Node<Item> next;
+        private Node<Item> previous;
     }
 
 
     public void enqueue(Item item) {
         if (isEmpty()) {
-            Node newNode = new Node();
+            Node<Item> newNode = new Node<>();
             newNode.item = item;
-            newNode.next = newNode;
-            first = newNode; //points to first element instead of null, thus making it circular
-            last = newNode;
+            newNode.next = newNode; //points to head element instead of null, thus making it circular
+            newNode.previous = newNode; //points to head element instead of null, thus making it circular
+            head = newNode;
             size++;
             return;
         }
-        Node newNode = new Node();
+        Node<Item> newNode = new Node<>();
         newNode.item = item;
-        newNode.next = first; //circular pointer from back to front
+        Node<Item> last = head.previous;
+        head.previous = newNode;
+        newNode.next = head; //circular pointer from back to front
         last.next = newNode;
-        last = newNode;
+        newNode.previous = last;
         size++;
     }
 
@@ -38,21 +40,27 @@ public class GenericFIFOQueue<Item> implements Iterable<Item> {
         // removes item from beginning of the list/queue
         if (isEmpty())
             return null;
-        Item item = first.item;
-        first = first.next;
+        Item item = head.item;
         if (size() == 1) {
-            first.next = null;
-            last.next = null;
-            first = null;
-            last = null;
-        } else
-            last.next = first;
+            head.next = null;
+            head.previous = null;
+            head = null;
+        } else {
+            Node<Item> temp = head;
+            while (temp.previous != head) {
+                temp = temp.previous;
+            }
+            Node<Item> first =
+            head.previous = first;
+            head = temp;
+
+        }
         size--;
         return item;
     }
 
     public boolean isEmpty() {
-        return first == null;
+        return head == null;
 
     }
 
@@ -66,7 +74,7 @@ public class GenericFIFOQueue<Item> implements Iterable<Item> {
         }
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
-            if (item.equals(last.item)) {
+            if (item.equals(head.item)) {
                 s.append("[");
                 s.append(item);
                 s.append("]");
@@ -86,7 +94,7 @@ public class GenericFIFOQueue<Item> implements Iterable<Item> {
     }
 
     private class ListIterator implements Iterator<Item> {
-        private Node current = first;
+        private Node<Item> current = head;
         private boolean completedLoop = false;
 
         public boolean hasNext() {
@@ -94,7 +102,7 @@ public class GenericFIFOQueue<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (current.next == first)
+            if (current.next == head)
                 completedLoop = true;
 
             Item item = current.item;
@@ -104,7 +112,7 @@ public class GenericFIFOQueue<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        GenericFIFOQueue<String> q = new GenericFIFOQueue<String>();
+        GenericFIFOQueue<String> q = new GenericFIFOQueue<>();
         StdOut.print("Enter strings to be added to back of queue");
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();

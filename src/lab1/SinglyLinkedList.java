@@ -5,15 +5,13 @@ import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
 
-public class CircularLinkedList implements Iterable<String> {
-    private Node first;
-    private Node last;
+public class SinglyLinkedList implements Iterable<String> {
+    private Node head;
     private int size;
 
     private class Node {
         private String item;
         private Node next;
-        private Node previous;
     }
 
 
@@ -21,75 +19,82 @@ public class CircularLinkedList implements Iterable<String> {
         if (isEmpty()) {
             Node newNode = new Node();
             newNode.item = item;
-            newNode.next = newNode;
-            newNode.previous = newNode;
-            first = newNode; //points to first element instead of null, thus making it circular
-            last = newNode;
+            newNode.next = newNode; //points to itself instead of null, thus making it circular
+            head = newNode;
             size++;
             return;
         }
         Node newNode = new Node();
         newNode.item = item;
-        newNode.next = first; //circular pointer from back to front
-        first.previous = newNode; //circular pointer from first to new node ie back of queue
-        newNode.previous = last;
+        newNode.next = head; //circular pointer from back to front
+        Node last = head;
+        while (last.next != head) {
+            last = last.next;
+        }
         last.next = newNode;
-        last = newNode;
-
         size++;
     }
 
     public void enqueueFront(String item) {
-        last = first.previous;
+        if (isEmpty()) {
+            Node newNode = new Node();
+            newNode.item = item;
+            newNode.next = newNode; //points to itself instead of null, thus making it circular
+            head = newNode;
+            size++;
+            return;
+        }
         Node newNode = new Node();
         newNode.item = item;
-        newNode.next = first;
-        newNode.previous = last; //circular pointer from front to back
-        last.next = newNode; //circular pointer from back to front
-        first.previous = newNode;
-        first = newNode;
+        newNode.next = head;
+        Node last = head;
+        while (last.next != head) {
+            last = last.next;
+        }
+        head = newNode;
+        last.next = head;
         size++;
     }
 
     public String dequeueFront() {
         if (isEmpty())
             return null;
-        String item = first.item;
-        first = first.next;
+        String item = head.item;
         if (size() == 1) {
-            first.next = null;
-            first.previous = null;
-            last.next = null;
-            first = null;
-            last = null;
+            head = null;
         } else {
-            first.previous = last;
-            last.next = first;
+            Node last = head;
+            while (last.next != head) {
+                last = last.next;
+            }
+            head = head.next;
+            last.next = head;
         }
         size--;
         return item;
     }
 
     public String dequeueBack() {
+        String item = "";
         if (isEmpty())
-            return null;
-        String item = last.item;
-        last = last.previous;
+            return "underflow";
         if (size() == 1) {
-            first.next = null;
-            first.previous = null;
-            last.next = null;
-            first = null;
-            last = null;
-        } else
-            last.next = first;
+            head.next = null;
+            head = null;
+        } else {
+            Node last = head;
+            while (last.next.next != head) {
+                last = last.next;
+            }
+            item = last.next.item;
+            last.next = head;
+        }
         size--;
         return item;
     }
 
     public boolean isEmpty() {
-        return first == null;
-
+        return head == null;
     }
 
     public int size() {
@@ -102,17 +107,10 @@ public class CircularLinkedList implements Iterable<String> {
         }
         StringBuilder s = new StringBuilder();
         for (String item : this) {
-            if (item.equals(last.item)) {
-                s.append("[");
-                s.append(item);
-                s.append("]");
-            }
-            else {
-                s.append("[");
-                s.append(item);
-                s.append("]");
-                s.append(", ");
-            }
+            s.append("[");
+            s.append(item);
+            s.append("]");
+            s.append(", ");
         }
         return s.toString();
     }
@@ -122,7 +120,7 @@ public class CircularLinkedList implements Iterable<String> {
     }
 
     private class ListIterator implements Iterator<String> {
-        private Node current = first;
+        private Node current = head;
         private boolean completedLoop;
 
         public boolean hasNext() {
@@ -130,7 +128,7 @@ public class CircularLinkedList implements Iterable<String> {
         }
 
         public String next() {
-            if (current.next == first)
+            if (current.next == head)
                 completedLoop = true;
 
             String item = current.item;
@@ -140,7 +138,7 @@ public class CircularLinkedList implements Iterable<String> {
     }
 
     public static void main(String[] args) {
-        CircularLinkedList q = new CircularLinkedList();
+        SinglyLinkedList q = new SinglyLinkedList();
         StdOut.print("Enter strings to be added to back of queue");
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
