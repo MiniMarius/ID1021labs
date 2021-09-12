@@ -4,90 +4,89 @@ import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
 
-public class GeneralizedQueue<Item> implements Iterable<Item> {
-    private Node last;
-    private Node first;
-    private int N;
+public class GeneralizedQueue implements Iterable<String> {
+    private Node head;
+    private int size;
 
     private class Node {
         private Node next;
-        private Item item;
+        private String item;
     }
 
     private Boolean isEmpty() {
-        return first == null;
+        return head == null;
     }
 
-    private void insert(Item item) {
-        Node node = new Node();
-        node.item = item;
-        if (last == null) {
-            first = node;
-            last = node;
-            N++;
+    private void insert(String item) {
+        if (isEmpty()) {
+            Node newNode = new Node();
+            newNode.item = item;
+            newNode.next = newNode; //points to itself instead of null, thus making it circular
+            head = newNode;
+            size++;
             return;
         }
-        last.next = node;
-        last = node;
-        N++;
+        Node newNode = new Node();
+        newNode.item = item;
+        newNode.next = head; //circular pointer from back to front
+        Node last = head;
+        while (last.next != head) {
+            last = last.next;
+        }
+        last.next = newNode;
+        size++;
     }
 
-    private Item delete(int index) {
-        Node current = first;
-        Node previous = null;
-        int count;
-        for (count = 1; count < index; count++){
-            previous = current;
-            current = current.next;
+    private String delete(int index) {
+        Node current = head;
+        for(int i = 1; i <= index; i++) {
+
         }
 
-        return current.item;
+        return "kebab";
     }
 
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Item item : this) {
-            if (item.equals(last.item)) {
-                s.append("[");
-                s.append(item);
-                s.append("]");
-            }
-            else {
+        for (String item : this) {
                 s.append("[");
                 s.append(item);
                 s.append("]");
                 s.append(", ");
-            }
         }
         return s.toString();
     }
 
-    public Iterator<Item> iterator() {
+    public Iterator<String> iterator() {
         return new QueueIterator();
     }
 
-    private class QueueIterator implements Iterator<Item> {
-        private Node current = first;
+    private class QueueIterator implements Iterator<String> {
+        private Node current = head;
+        private boolean completedLoop;
 
         public boolean hasNext() {
-            return current != null;
+            return !completedLoop;
         }
 
-        public Item next() {
-            Item item = current.item;
+        public String next() {
+            if (current.next == head)
+                completedLoop = true;
+
+            String item = current.item;
             current = current.next;
             return item;
         }
     }
 
     public static void main(String[] args) {
-        GeneralizedQueue<Character> q = new GeneralizedQueue<Character>();
-        q.insert('A');
+        GeneralizedQueue q = new GeneralizedQueue();
+        q.insert("a");
         StdOut.print(q + "\n");
-        q.insert('B');
+        q.insert("b");
         StdOut.print(q + "\n");
-        q.insert('C');
+        q.insert("c");
         StdOut.print(q + "\n");
-        StdOut.print(q.delete(3));
+        StdOut.print(q.delete(2));
     }
 }

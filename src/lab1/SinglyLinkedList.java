@@ -116,10 +116,10 @@ public class SinglyLinkedList implements Iterable<String> {
     }
 
     public Iterator<String> iterator() {
-        return new ListIterator();
+        return new QueueIterator();
     }
 
-    private class ListIterator implements Iterator<String> {
+    private class QueueIterator implements Iterator<String> {
         private Node current = head;
         private boolean completedLoop;
 
