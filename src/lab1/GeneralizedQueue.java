@@ -30,7 +30,7 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
         }
         Node<Item> newLast = new Node<>();
         newLast.item = item;
-        Node last = head.previous;
+        Node<Item> last = head.previous;
         head.previous = newLast;
         newLast.next = head; //circular pointer from back to front
         last.next = newLast;

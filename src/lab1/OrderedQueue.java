@@ -26,13 +26,38 @@ public class OrderedQueue implements Iterable<Integer> {
             size++;
             return;
         }
-        Node newLast = new Node();
-        newLast.item = item;
+
+        Node newNode = new Node();
+        newNode.item = item;
         Node last = head.previous;
-        head.previous = newLast;
-        newLast.next = head; //circular pointer from back to front
-        last.next = newLast;
-        newLast.previous = last;
+        if (item > last.item) {
+            head.previous = newNode;
+            newNode.next = head; //circular pointer from back to front
+            last.next = newNode;
+            newNode.previous = last;
+        }
+
+        if (item < last.item) {
+            head.previous = newNode;
+            newNode.next = head; //circular pointer from back to front
+            last.next = newNode;
+            newNode.previous = last;
+        } else {
+            Node current = head;
+            while (current.next != head) {
+                if (item < current.item) {
+                    current.previous.next = newNode;
+                    newNode.previous = current.previous;
+                    newNode.next = current;
+                    current.previous = newNode;
+                    if (current == head) {
+                        head = newNode;
+                    }
+                    break;
+                }
+                current = current.next;
+            }
+        }
         size++;
     }
 
@@ -61,10 +86,10 @@ public class OrderedQueue implements Iterable<Integer> {
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (Integer item : this) {
-                s.append("[");
-                s.append(item);
-                s.append("]");
-                s.append(", ");
+            s.append("[");
+            s.append(item);
+            s.append("]");
+            s.append(", ");
         }
         return s.toString();
     }
@@ -99,12 +124,5 @@ public class OrderedQueue implements Iterable<Integer> {
             q.enqueue(item);
             StdOut.print(q + "\n");
         }
-        StdOut.print("dequeue one item");
-        q.dequeue();
-        StdOut.print(q + "\n");
-        StdOut.print("dequeue another item");
-        q.dequeue();
-        StdOut.print(q + "\n");
-        StdOut.println("(" + q.size() + " left on queue)");
     }
 }
