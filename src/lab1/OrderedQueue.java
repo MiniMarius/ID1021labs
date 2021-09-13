@@ -6,8 +6,7 @@ import edu.princeton.cs.algs4.StdOut;
 import java.util.Iterator;
 
 public class OrderedQueue implements Iterable<Integer> {
-    private Node first;
-    private Node last;
+    private Node head;
     private int size;
 
     private class Node {
@@ -21,36 +20,37 @@ public class OrderedQueue implements Iterable<Integer> {
         if (isEmpty()) {
             Node newNode = new Node();
             newNode.item = item;
-            newNode.next = newNode;
-            newNode.previous = newNode;
-            first = newNode; //points to first element instead of null, thus making it circular
-            last = newNode;
+            newNode.next = newNode; //points to head element instead of null, thus making it circular
+            newNode.previous = newNode; //points to head element instead of null, thus making it circular
+            head = newNode;
             size++;
             return;
         }
-        Node newNode = new Node();
-        newNode.item = item;
-        newNode.next = first; //circular pointer from back to front
-        first.previous = newNode; //circular pointer from first to new node ie back of queue
-        newNode.previous = last;
-        last.next = newNode;
-        last = newNode;
-
+        Node newLast = new Node();
+        newLast.item = item;
+        Node last = head.previous;
+        head.previous = newLast;
+        newLast.next = head; //circular pointer from back to front
+        last.next = newLast;
+        newLast.previous = last;
         size++;
     }
 
     public Integer dequeue() {
-        Integer item = first.item;
-        first = first.next;
-        first.previous = last;
-        last.next = first;
+        Integer item = head.item;
+        if (size() == 1) {
+            head = null;
+        } else {
+            Node last = head.previous;
+            last.previous.next = head;
+            head.previous = last.previous;
+        }
         size--;
         return item;
-
     }
 
     public boolean isEmpty() {
-        return first == null;
+        return head == null;
 
     }
 
@@ -61,17 +61,10 @@ public class OrderedQueue implements Iterable<Integer> {
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (Integer item : this) {
-            if (item.equals(last.item)) {
-                s.append("[");
-                s.append(item);
-                s.append("]");
-            }
-            else {
                 s.append("[");
                 s.append(item);
                 s.append("]");
                 s.append(", ");
-            }
         }
         return s.toString();
     }
@@ -81,7 +74,7 @@ public class OrderedQueue implements Iterable<Integer> {
     }
 
     private class ListIterator implements Iterator<Integer> {
-        private Node current = first;
+        private Node current = head;
         private boolean completedLoop;
 
         public boolean hasNext() {
@@ -89,7 +82,7 @@ public class OrderedQueue implements Iterable<Integer> {
         }
 
         public Integer next() {
-            if (current.next == first)
+            if (current.next == head)
                 completedLoop = true;
 
             Integer item = current.item;
