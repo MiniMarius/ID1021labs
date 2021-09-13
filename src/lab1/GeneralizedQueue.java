@@ -4,23 +4,23 @@ import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
 
-public class GeneralizedQueue implements Iterable<String> {
-    private Node head;
+public class GeneralizedQueue<Item> implements Iterable<Item> {
+    private Node<Item> head;
     private int size;
 
-    private class Node {
-        private String item;
-        private Node next;
-        private Node previous;
+    private static class Node<Item> {
+        private Item item;
+        private Node<Item> next;
+        private Node<Item> previous;
     }
 
     private Boolean isEmpty() {
         return head == null;
     }
 
-    private void insert(String item) {
+    private void insert(Item item) {
         if (isEmpty()) {
-            Node newNode = new Node();
+            Node<Item> newNode = new Node<>();
             newNode.item = item;
             newNode.next = newNode; //points to head element instead of null, thus making it circular
             newNode.previous = newNode; //points to head element instead of null, thus making it circular
@@ -28,7 +28,7 @@ public class GeneralizedQueue implements Iterable<String> {
             size++;
             return;
         }
-        Node newLast = new Node();
+        Node<Item> newLast = new Node<>();
         newLast.item = item;
         Node last = head.previous;
         head.previous = newLast;
@@ -38,8 +38,8 @@ public class GeneralizedQueue implements Iterable<String> {
         size++;
     }
 
-    private String delete(int index) {
-        Node current = head;
+    private Item delete(int index) {
+        Node<Item> current = head;
         for(int i = size; i > index; i--) {
             current = current.next;
         }
@@ -57,7 +57,7 @@ public class GeneralizedQueue implements Iterable<String> {
 
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (String item : this) {
+        for (Item item : this) {
                 s.append("[");
                 s.append(item);
                 s.append("]");
@@ -66,30 +66,30 @@ public class GeneralizedQueue implements Iterable<String> {
         return s.toString();
     }
 
-    public Iterator<String> iterator() {
+    public Iterator<Item> iterator() {
         return new QueueIterator();
     }
 
-    private class QueueIterator implements Iterator<String> {
-        private Node current = head;
+    private class QueueIterator implements Iterator<Item> {
+        private Node<Item> current = head;
         private boolean completedLoop;
 
         public boolean hasNext() {
             return !completedLoop;
         }
 
-        public String next() {
+        public Item next() {
             if (current.next == head)
                 completedLoop = true;
 
-            String item = current.item;
+            Item item = current.item;
             current = current.next;
             return item;
         }
     }
 
     public static void main(String[] args) {
-        GeneralizedQueue q = new GeneralizedQueue();
+        GeneralizedQueue<String> q = new GeneralizedQueue<>();
         q.insert("a");
         StdOut.print(q + "\n");
         q.insert("b");
