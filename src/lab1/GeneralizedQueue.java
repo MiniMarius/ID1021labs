@@ -9,8 +9,9 @@ public class GeneralizedQueue implements Iterable<String> {
     private int size;
 
     private class Node {
-        private Node next;
         private String item;
+        private Node next;
+        private Node previous;
     }
 
     private Boolean isEmpty() {
@@ -21,29 +22,37 @@ public class GeneralizedQueue implements Iterable<String> {
         if (isEmpty()) {
             Node newNode = new Node();
             newNode.item = item;
-            newNode.next = newNode; //points to itself instead of null, thus making it circular
+            newNode.next = newNode; //points to head element instead of null, thus making it circular
+            newNode.previous = newNode; //points to head element instead of null, thus making it circular
             head = newNode;
             size++;
             return;
         }
-        Node newNode = new Node();
-        newNode.item = item;
-        newNode.next = head; //circular pointer from back to front
-        Node last = head;
-        while (last.next != head) {
-            last = last.next;
-        }
-        last.next = newNode;
+        Node newLast = new Node();
+        newLast.item = item;
+        Node last = head.previous;
+        head.previous = newLast;
+        newLast.next = head; //circular pointer from back to front
+        last.next = newLast;
+        newLast.previous = last;
         size++;
     }
 
     private String delete(int index) {
         Node current = head;
-        for(int i = 1; i <= index; i++) {
-
+        for(int i = size; i > index; i--) {
+            current = current.next;
         }
-
-        return "kebab";
+        if (index == size) {
+            Node last = current.previous;
+            head = current.next;
+            last.next = head;
+        }
+        else {
+            current.previous.next = current.next;
+            current.next.previous.previous = current.previous;
+        }
+        return current.item;
     }
 
     public String toString() {
@@ -87,6 +96,7 @@ public class GeneralizedQueue implements Iterable<String> {
         StdOut.print(q + "\n");
         q.insert("c");
         StdOut.print(q + "\n");
-        StdOut.print(q.delete(2));
+        q.delete(3);
+        StdOut.print(q + "\n");
     }
 }
