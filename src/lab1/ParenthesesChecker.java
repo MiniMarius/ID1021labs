@@ -1,10 +1,8 @@
 package lab1;
 
 
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
-
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class ParenthesesChecker {
     private Node first;
@@ -71,8 +69,9 @@ public class ParenthesesChecker {
 
     public static void main(String[] args) {
         ParenthesesChecker parenthesesChecker = new ParenthesesChecker();
-        StdOut.print("enter brackets, parentheses and braces to be tested for balance");
-        StdOut.print(parenthesesChecker.isStringBalanced(StdIn.readString()));
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("enter brackets, parentheses and braces to be tested for balance");
+        System.out.println(parenthesesChecker.isStringBalanced(scanner.next()));
     }
 }
 
