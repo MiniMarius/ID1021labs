@@ -35,6 +35,8 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
     }
 
     public Item dequeue() {
+        if (isEmpty())
+            return null;
         Item item = head.item;
         if (size() == 1) {
             head = null;
@@ -49,7 +51,7 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
     }
 
     public boolean isEmpty() {
-        return head == null;
+        return size() == 0;
 
     }
 
@@ -63,10 +65,18 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         }
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
-            s.append("[");
-            s.append(item);
-            s.append("]");
-            s.append(", ");
+            if(size() == 1 || item.equals(head.previous.item)) {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+            }
+            else {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+                s.append(", ");
+
+            }
         }
         return s.toString();
     }
@@ -101,7 +111,7 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
             String input = scanner.nextLine();
             switch (input) {
                 case ("add"):
-                    System.out.println("enter item to be added at requested index");
+                    System.out.println("enter item to be added");
                     q.enqueue(scanner.next());
                     System.out.println(q + "\n");
                     break;
