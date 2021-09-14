@@ -61,7 +61,6 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
                 s.append(item);
                 s.append("]");
                 s.append(", ");
-
             }
         }
         return s.toString();
@@ -100,7 +99,7 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
                 case ("del"):
                     System.out.println("enter index to be removed from queue");
                     int index = scanner.nextInt();
-                    System.out.println("current item:" + q.delete(index));
+                    q.delete(index);
                     System.out.println(q + "\n");
                     break;
                 case ("q"):
