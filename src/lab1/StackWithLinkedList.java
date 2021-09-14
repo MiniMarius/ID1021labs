@@ -1,9 +1,8 @@
 package lab1;
 
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class StackWithLinkedList implements Iterable<Character> {
     private Node first;
@@ -77,16 +76,13 @@ public class StackWithLinkedList implements Iterable<Character> {
 
     public static void main(String[] args) {
         StackWithLinkedList stack = new StackWithLinkedList();
-        StdOut.print("Enter characters to be reversed\n");
-        while (!StdIn.isEmpty()) {
-            Character item = StdIn.readChar();
-            stack.push(item);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(("Enter characters to be reversed\n"));
+        String input = scanner.next();
+        for (Character c : input.toCharArray()) {
+            stack.push(c);
         }
-        StdOut.println("(" + stack.size() + " left on stack)");
-        StdOut.print(stack);
-
-        while (!stack.isEmpty()) {
-            StdOut.print(stack.pop());
-        }
+        System.out.println(stack.size() + " left on stack");
+        System.out.println(stack);
     }
 }
