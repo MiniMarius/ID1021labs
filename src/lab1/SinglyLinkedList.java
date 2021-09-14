@@ -26,10 +26,7 @@ public class SinglyLinkedList implements Iterable<String> {
         Node newNode = new Node();
         newNode.item = item;
         newNode.next = head; //circular pointer from back to front
-        Node last = head;
-        while (last.next != head) {
-            last = last.next;
-        }
+        Node last = getLast();
         last.next = newNode;
         size++;
     }
@@ -46,10 +43,7 @@ public class SinglyLinkedList implements Iterable<String> {
         Node newNode = new Node();
         newNode.item = item;
         newNode.next = head;
-        Node last = head;
-        while (last.next != head) {
-            last = last.next;
-        }
+        Node last = getLast();
         head = newNode;
         last.next = head;
         size++;
@@ -62,10 +56,7 @@ public class SinglyLinkedList implements Iterable<String> {
         if (size() == 1) {
             head = null;
         } else {
-            Node last = head;
-            while (last.next != head) {
-                last = last.next;
-            }
+            Node last = getLast();
             head = head.next;
             last.next = head;
         }
@@ -74,9 +65,9 @@ public class SinglyLinkedList implements Iterable<String> {
     }
 
     public String dequeueBack() {
-        String item = "";
         if (isEmpty())
-            return "underflow";
+            return null;
+        String item = "";
         if (size() == 1) {
             head = null;
         } else {
@@ -89,6 +80,15 @@ public class SinglyLinkedList implements Iterable<String> {
         }
         size--;
         return item;
+    }
+
+    private Node getLast() {
+        Node current = head;
+        while (current.next.next != head) {
+            current = current.next;
+        }
+        return current.next;
+
     }
 
     public boolean isEmpty() {
@@ -105,10 +105,17 @@ public class SinglyLinkedList implements Iterable<String> {
         }
         StringBuilder s = new StringBuilder();
         for (String item : this) {
-            s.append("[");
-            s.append(item);
-            s.append("]");
-            s.append(", ");
+            if (size() == 1 || item.equals(getLast().item)) {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+            } else {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+                s.append(", ");
+
+            }
         }
         return s.toString();
     }
