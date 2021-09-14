@@ -1,7 +1,5 @@
 package lab1;
 
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
 import java.util.Scanner;
