@@ -39,11 +39,17 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
     }
 
     private Item delete(int index) {
+        if (isEmpty())
+            return null;
         Node<Item> current = head;
         for (int i = size; i > index; i--) {
             current = current.next;
         }
-        if (index == size) {
+        if (size() == 1) {
+            head.next = null;
+            head = null;
+        }
+        else if (index == size) {
             Node last = current.previous;
             head = current.next;
             last.next = head;
@@ -59,12 +65,23 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
     }
 
     public String toString() {
+        if (isEmpty()) {
+            return "Queue is empty";
+        }
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
-            s.append("[");
-            s.append(item);
-            s.append("]");
-            s.append(", ");
+            if(size() == 1 || item.equals(head.previous.item)) {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+            }
+            else {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+                s.append(", ");
+
+            }
         }
         return s.toString();
     }

@@ -1,9 +1,7 @@
 package lab1;
 
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
-
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class OrderedQueue implements Iterable<Integer> {
     private Node head;
@@ -36,12 +34,10 @@ public class OrderedQueue implements Iterable<Integer> {
             last.next = newNode;
             newNode.previous = last;
         }
-
-        if (item < last.item) {
-            head.previous = newNode;
-            newNode.next = head; //circular pointer from back to front
-            last.next = newNode;
-            newNode.previous = last;
+        else if (item > last.previous.item) {
+            newNode.next = last;
+            last.previous.next = newNode;
+            newNode.previous = last.previous;
         } else {
             Node current = head;
             while (current.next != head) {
@@ -62,13 +58,16 @@ public class OrderedQueue implements Iterable<Integer> {
     }
 
     public Integer dequeue() {
+        if (isEmpty())
+            return null;
         Integer item = head.item;
         if (size() == 1) {
             head = null;
         } else {
             Node last = head.previous;
-            last.previous.next = head;
-            head.previous = last.previous;
+            last.next = head.next;
+            head.next.previous = last;
+            head = head.next;
         }
         size--;
         return item;
@@ -84,12 +83,23 @@ public class OrderedQueue implements Iterable<Integer> {
     }
 
     public String toString() {
+        if (isEmpty()) {
+            return "Queue is empty";
+        }
         StringBuilder s = new StringBuilder();
         for (Integer item : this) {
-            s.append("[");
-            s.append(item);
-            s.append("]");
-            s.append(", ");
+            if(size() == 1 || item.equals(head.previous.item)) {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+            }
+            else {
+                s.append("[");
+                s.append(item);
+                s.append("]");
+                s.append(", ");
+
+            }
         }
         return s.toString();
     }
@@ -118,11 +128,27 @@ public class OrderedQueue implements Iterable<Integer> {
 
     public static void main(String[] args) {
         OrderedQueue q = new OrderedQueue();
-        StdOut.print("Enter strings to be added to back of queue");
-        while (!StdIn.isEmpty()) {
-            Integer item = StdIn.readInt();
-            q.enqueue(item);
-            StdOut.print(q + "\n");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("add: enqueue, del: dequeue, s: size of queue, q: quit");
+            String input = scanner.nextLine();
+            switch (input) {
+                case ("add"):
+                    System.out.println("enter integer to be added at requested index");
+                    q.enqueue(scanner.nextInt());
+                    System.out.println(q + "\n");
+                    break;
+                case ("del"):
+                    q.dequeue();
+                    System.out.println(q + "\n");
+                    break;
+                case ("q"):
+                    System.exit(0);
+                    break;
+                case ("s"):
+                    System.out.println(q.size());
+                    break;
+            }
         }
     }
 }
