@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class SinglyLinkedList implements Iterable<String> {
     private Node head;
@@ -79,7 +80,6 @@ public class SinglyLinkedList implements Iterable<String> {
         if (isEmpty())
             return "underflow";
         if (size() == 1) {
-            head.next = null;
             head = null;
         } else {
             Node last = head;
@@ -139,25 +139,36 @@ public class SinglyLinkedList implements Iterable<String> {
 
     public static void main(String[] args) {
         SinglyLinkedList q = new SinglyLinkedList();
-        StdOut.print("Enter strings to be added to back of queue");
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            q.enqueueBack(item);
-            StdOut.print(q + "\n");
-        }
-
-        StdOut.print("adding \"first\" to first of queue \n");
-        q.enqueueFront("first");
-        StdOut.print(q + "\n");
-
-        StdOut.print("dequeuing 1 from front \n");
-        q.dequeueFront();
-        StdOut.print(q + "\n");
-        StdOut.println("(" + q.size() + " left on queue)");
-        StdOut.print("dequeuing whole circular list \n");
-        while (!q.isEmpty()) {
-            q.dequeueBack();
-            StdOut.print(q + "\n");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("addf: add to front, addb: add to back delf: dequeue front, delb: dequeue back s: size of queue, q: quit");
+            String input = scanner.nextLine();
+            switch (input) {
+                case ("addf"):
+                    System.out.println("enter item to be added to front of queue");
+                    q.enqueueFront(scanner.next());
+                    System.out.println(q + "\n");
+                    break;
+                case ("addb"):
+                    System.out.println("enter item to be added to back of queue");
+                    q.enqueueBack(scanner.next());
+                    System.out.println(q + "\n");
+                    break;
+                case ("delf"):
+                    q.dequeueFront();
+                    System.out.println(q + "\n");
+                    break;
+                case ("delb"):
+                    q.dequeueBack();
+                    System.out.println(q + "\n");
+                    break;
+                case ("q"):
+                    System.exit(0);
+                    break;
+                case ("s"):
+                    System.out.println(q.size());
+                    break;
+            }
         }
     }
 }
