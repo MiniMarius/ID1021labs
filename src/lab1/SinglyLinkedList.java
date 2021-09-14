@@ -4,59 +4,59 @@ package lab1;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class SinglyLinkedList implements Iterable<String> {
-    private Node head;
+public class SinglyLinkedList<Item> implements Iterable<Item> {
+    private Node<Item> head;
     private int size;
 
-    private class Node {
-        private String item;
-        private Node next;
+    private static class Node<Item> {
+        private Item item;
+        private Node<Item> next;
     }
 
 
-    public void enqueueBack(String item) {
+    public void enqueueBack(Item item) {
         if (isEmpty()) {
-            Node newNode = new Node();
+            Node<Item> newNode = new Node<Item>();
             newNode.item = item;
             newNode.next = newNode; //points to itself instead of null, thus making it circular
             head = newNode;
             size++;
             return;
         }
-        Node newNode = new Node();
+        Node<Item> newNode = new Node<>();
         newNode.item = item;
         newNode.next = head; //circular pointer from back to front
-        Node last = getLast();
+        Node<Item> last = getLast();
         last.next = newNode;
         size++;
     }
 
-    public void enqueueFront(String item) {
+    public void enqueueFront(Item item) {
         if (isEmpty()) {
-            Node newNode = new Node();
+            Node<Item> newNode = new Node<>();
             newNode.item = item;
             newNode.next = newNode; //points to itself instead of null, thus making it circular
             head = newNode;
             size++;
             return;
         }
-        Node newNode = new Node();
+        Node<Item> newNode = new Node<>();
         newNode.item = item;
         newNode.next = head;
-        Node last = getLast();
+        Node<Item> last = getLast();
         head = newNode;
         last.next = head;
         size++;
     }
 
-    public String dequeueFront() {
+    public Item dequeueFront() {
         if (isEmpty())
             return null;
-        String item = head.item;
+        Item item = head.item;
         if (size() == 1) {
             head = null;
         } else {
-            Node last = getLast();
+            Node<Item> last = getLast();
             head = head.next;
             last.next = head;
         }
@@ -64,14 +64,14 @@ public class SinglyLinkedList implements Iterable<String> {
         return item;
     }
 
-    public String dequeueBack() {
+    public Item dequeueBack() {
         if (isEmpty())
             return null;
-        String item = "";
+        Item item = null;
         if (size() == 1) {
             head = null;
         } else {
-            Node last = head;
+            Node<Item> last = head;
             while (last.next.next != head) {
                 last = last.next;
             }
@@ -82,8 +82,8 @@ public class SinglyLinkedList implements Iterable<String> {
         return item;
     }
 
-    private Node getLast() {
-        Node current = head;
+    private Node<Item> getLast() {
+        Node<Item> current = head;
         while (current.next.next != head) {
             current = current.next;
         }
@@ -104,7 +104,7 @@ public class SinglyLinkedList implements Iterable<String> {
             return "Queue is empty";
         }
         StringBuilder s = new StringBuilder();
-        for (String item : this) {
+        for (Item item : this) {
             if (size() == 1 || item.equals(getLast().item)) {
                 s.append("[");
                 s.append(item);
@@ -120,30 +120,30 @@ public class SinglyLinkedList implements Iterable<String> {
         return s.toString();
     }
 
-    public Iterator<String> iterator() {
+    public Iterator<Item> iterator() {
         return new QueueIterator();
     }
 
-    private class QueueIterator implements Iterator<String> {
-        private Node current = head;
+    private class QueueIterator implements Iterator<Item> {
+        private Node<Item> current = head;
         private boolean completedLoop;
 
         public boolean hasNext() {
             return !completedLoop;
         }
 
-        public String next() {
+        public Item next() {
             if (current.next == head)
                 completedLoop = true;
 
-            String item = current.item;
+            Item item = current.item;
             current = current.next;
             return item;
         }
     }
 
     public static void main(String[] args) {
-        SinglyLinkedList q = new SinglyLinkedList();
+        SinglyLinkedList<String> q = new SinglyLinkedList<>();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("addf: add to front, addb: add to back delf: dequeue front, delb: dequeue back s: size of queue, q: quit");
