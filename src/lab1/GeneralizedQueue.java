@@ -1,8 +1,8 @@
 package lab1;
 
-import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class GeneralizedQueue<Item> implements Iterable<Item> {
     private Node<Item> head;
@@ -40,28 +40,31 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
 
     private Item delete(int index) {
         Node<Item> current = head;
-        for(int i = size; i > index; i--) {
+        for (int i = size; i > index; i--) {
             current = current.next;
         }
         if (index == size) {
             Node last = current.previous;
             head = current.next;
             last.next = head;
-        }
-        else {
+        } else {
             current.previous.next = current.next;
             current.next.previous.previous = current.previous;
         }
         return current.item;
     }
 
+    private Integer size() {
+        return size;
+    }
+
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
-                s.append("[");
-                s.append(item);
-                s.append("]");
-                s.append(", ");
+            s.append("[");
+            s.append(item);
+            s.append("]");
+            s.append(", ");
         }
         return s.toString();
     }
@@ -90,13 +93,29 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
 
     public static void main(String[] args) {
         GeneralizedQueue<String> q = new GeneralizedQueue<>();
-        q.insert("a");
-        StdOut.print(q + "\n");
-        q.insert("b");
-        StdOut.print(q + "\n");
-        q.insert("c");
-        StdOut.print(q + "\n");
-        q.delete(3);
-        StdOut.print(q + "\n");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("add: enqueue, del: dequeue, s: size of queue, q: quit");
+            String input = scanner.nextLine();
+            switch (input) {
+                case ("add"):
+                    System.out.println("enter item to be added");
+                    q.insert(scanner.next());
+                    System.out.println(q + "\n");
+                    break;
+                case ("del"):
+                    System.out.println("enter index to be removed from queue");
+                    int index = scanner.nextInt();
+                    q.delete(index);
+                    System.out.println(q + "\n");
+                    break;
+                case ("q"):
+                    System.exit(0);
+                    break;
+                case ("s"):
+                    System.out.println(q.size());
+                    break;
+            }
+        }
     }
 }
