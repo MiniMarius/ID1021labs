@@ -34,6 +34,13 @@ public class OrderedQueue implements Iterable<Integer> {
             last.next = newNode;
             newNode.previous = last;
         }
+        else if (item < last.item && size() == 1) {
+            newNode.next = last;
+            newNode.previous = last;
+            last.previous = newNode;
+            head = newNode;
+            last.next = newNode;
+        }
         else if (item > last.previous.item) {
             newNode.next = last;
             last.previous.next = newNode;
