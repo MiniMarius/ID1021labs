@@ -1,9 +1,8 @@
 package lab1;
 
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class DoublyLinkedList<Item> implements Iterable<Item> {
     private Node<Item> head;
@@ -41,8 +40,9 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
             head = null;
         } else {
             Node<Item> last = head.previous;
-            last.previous.next = head;
-            head.previous = last.previous;
+            last.next = head.next;
+            head.next.previous = last;
+            head = head.next;
         }
         size--;
         return item;
@@ -63,10 +63,10 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         }
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
-                s.append("[");
-                s.append(item);
-                s.append("]");
-                s.append(", ");
+            s.append("[");
+            s.append(item);
+            s.append("]");
+            s.append(", ");
         }
         return s.toString();
     }
@@ -95,18 +95,27 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
 
     public static void main(String[] args) {
         DoublyLinkedList<String> q = new DoublyLinkedList<>();
-        StdOut.print("Enter strings to be added to back of queue");
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            q.enqueue(item);
-            StdOut.print(q + "\n");
-        }
-        StdOut.println("(" + q.size() + " left on queue)");
-        StdOut.print(q + "\n");
-
-        while (!(q.isEmpty())) {
-            q.dequeue();
-            StdOut.print(q + "\n");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("add: enqueue, del: dequeue, s: size of queue, q: quit");
+            String input = scanner.nextLine();
+            switch (input) {
+                case ("add"):
+                    System.out.println("enter item to be added at requested index");
+                    q.enqueue(scanner.next());
+                    System.out.println(q + "\n");
+                    break;
+                case ("del"):
+                    q.dequeue();
+                    System.out.println(q + "\n");
+                    break;
+                case ("q"):
+                    System.exit(0);
+                    break;
+                case ("s"):
+                    System.out.println(q.size());
+                    break;
+            }
         }
     }
 }
