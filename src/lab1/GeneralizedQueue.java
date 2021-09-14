@@ -5,58 +5,40 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class GeneralizedQueue<Item> implements Iterable<Item> {
-    private Node<Item> head;
+    private Node<Item> first;
+    private Node<Item> last;
     private int size;
 
     private static class Node<Item> {
         private Item item;
         private Node<Item> next;
-        private Node<Item> previous;
     }
 
     private Boolean isEmpty() {
-        return head == null;
+        return first == null;
     }
 
     private void insert(Item item) {
-        if (isEmpty()) {
-            Node<Item> newNode = new Node<>();
-            newNode.item = item;
-            newNode.next = newNode; //points to head element instead of null, thus making it circular
-            newNode.previous = newNode; //points to head element instead of null, thus making it circular
-            head = newNode;
-            size++;
-            return;
-        }
-        Node<Item> newLast = new Node<>();
-        newLast.item = item;
-        Node<Item> last = head.previous;
-        head.previous = newLast;
-        newLast.next = head; //circular pointer from back to front
-        last.next = newLast;
-        newLast.previous = last;
+        Node<Item> oldlast = last;
+        last = new Node<Item>();
+        last.item = item;
+        last.next = null;
+        if (isEmpty()) first = last;
+        else oldlast.next = last;
         size++;
     }
 
     private Item delete(int index) {
         if (isEmpty())
             return null;
-        Node<Item> current = head;
-        for (int i = size; i > index; i--) {
+        Node<Item> current = first;
+        for (int i = size; i - 1 > index; i--) {
             current = current.next;
         }
-        if (size() == 1) {
-            head.next = null;
-            head = null;
-        }
-        else if (index == size) {
-            Node last = current.previous;
-            head = current.next;
-            last.next = head;
-        } else {
-            current.previous.next = current.next;
-            current.next.previous.previous = current.previous;
-        }
+        if (current.equals(first)) first = first.next;
+        else if (current.next.equals(last)) current.next = null;
+        else current.next = current.next.next;
+        size--;
         return current.item;
     }
 
@@ -70,12 +52,11 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
         }
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
-            if(size() == 1 || item.equals(head.previous.item)) {
+            if (size() == 1 || item.equals(last.item)) {
                 s.append("[");
                 s.append(item);
                 s.append("]");
-            }
-            else {
+            } else {
                 s.append("[");
                 s.append(item);
                 s.append("]");
@@ -91,17 +72,13 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
     }
 
     private class QueueIterator implements Iterator<Item> {
-        private Node<Item> current = head;
-        private boolean completedLoop;
+        private Node<Item> current = first;
 
         public boolean hasNext() {
-            return !completedLoop;
+            return current != null;
         }
 
         public Item next() {
-            if (current.next == head)
-                completedLoop = true;
-
             Item item = current.item;
             current = current.next;
             return item;
@@ -123,7 +100,7 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
                 case ("del"):
                     System.out.println("enter index to be removed from queue");
                     int index = scanner.nextInt();
-                    q.delete(index);
+                    System.out.println("current item:" + q.delete(index));
                     System.out.println(q + "\n");
                     break;
                 case ("q"):
