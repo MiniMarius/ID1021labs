@@ -1,15 +1,14 @@
+//README this implements insertion sort and prints the number of swaps performed when sorting the array
 #include <stdlib.h>
 #include <stdio.h>
 
 
-void count_inversions(int arr[], int size);
 void print_array(int arr[], int size);
 void insertion_sort(int arr[], int size);
 int main(int argc, char const *argv[])
 {
     int arr[] = {1, 2, 5, 3, 4, 0};
     int n = sizeof(arr) / sizeof(arr[0]);
-    count_inversions(arr, n);
     insertion_sort(arr, n);
     return 0;
 }
@@ -23,6 +22,7 @@ void insertion_sort(int arr[], int size) {
             arr[j-1] = arr[j];
             arr[j] = temp;
             j -=1;
+            print_array(arr, size);
             printf("Amount of swaps: %d\n", ++count_of_swaps);
         }
     }
@@ -34,16 +34,4 @@ void print_array(int arr[], int size) {
     for (i = 0; i < size; i++)
         printf("%d ", arr[i]);
     printf("\n");
-}
-
-void count_inversions(int arr[], int size) {
-    int i,j;
-    int inversion_count;
-    for(i = 0; i < size - 1; i++) {
-        for(j = i + 1; j < size; j++) {
-            if(arr[i] > arr[j])
-                inversion_count++;
-        }
-    }
-    printf("Number of inversions: %d\n", inversion_count);
 }
