@@ -17,7 +17,7 @@ sscanf(argv[3],"%d", &maxInt);
 
 printf("%d\n", nrIntegers);
 
-srandom(seed);
+srand(seed);
 for(i=0; i<nrIntegers; i++) 
-printf("%d\n", (long)(maxInt * ((double)random()/(double)RAND_MAX)));
+printf("%d\n", (long)(maxInt * ((double)rand()/(double)RAND_MAX)));
 }
