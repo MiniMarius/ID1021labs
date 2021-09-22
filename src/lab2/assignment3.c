@@ -21,7 +21,6 @@ void print_array(int arr[], int size) {
     printf("Ordered numbers: \n");
     for (i=0; i < size; i++)
         printf("%d ", arr[i]);
-    printf("\n\n");
 }
 
 void shift_negatives(int arr[], int size) {
