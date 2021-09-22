@@ -1,20 +1,30 @@
 //README this implements insertion sort sorted in descending order instead of ascending order.
-//code copied from assingment 2, nothing changed yet.
+//code copied from assignment 2, nothing changed yet.
 #include <stdlib.h>
 #include <stdio.h>
 
-
+void inverse_arr_values(int arr[], int size);
 void count_inversions(int arr[], int size);
 void print_array(int arr[], int size);
 void insertion_sort(int arr[], int size);
-int main(int argc, char const *argv[])
-{
+
+int main(int argc, char const *argv[]) {
     int arr[] = {1, 2, 5, 3, 4, 0};
     int n = sizeof(arr) / sizeof(arr[0]);
     count_inversions(arr, n);
+    inverse_arr_values(arr, n);
     insertion_sort(arr, n);
+    inverse_arr_values(arr, n);
+    print_array(arr, n);
     return 0;
 }
+
+void inverse_arr_values(int arr[], int size) {
+    for(int i = 0; i < size; i++) {
+        arr[i] *=-1;
+    }
+}
+
 void insertion_sort(int arr[], int size) {
     int i, j;
     int count_of_swaps = 0;
@@ -29,7 +39,6 @@ void insertion_sort(int arr[], int size) {
             printf("swap count:  %d\n", ++count_of_swaps);
         }
     }
-
 }
 
 void print_array(int arr[], int size) {
