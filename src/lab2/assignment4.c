@@ -3,8 +3,8 @@
 #include <stdio.h>
 
 
-void quicksort() {
-void merge_sort()
+void quicksort(int arr[], int first, int last);
+void merge_sort();
 void print_array(int arr[], int size);
 void insertion_sort(int arr[], int size);
 int main(int argc, char const *argv[])
@@ -30,7 +30,9 @@ void insertion_sort(int arr[], int size) {
     }
 }
 
-void quicksort() {
+void quicksort(int arr[], int first, int last) {
+
+}
 }
 
 void merge_sort() {
