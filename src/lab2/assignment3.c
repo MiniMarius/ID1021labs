@@ -5,7 +5,7 @@
 
 void shift_negatives(int arr[], int size);
 void print_array(int arr[], int size);
-int main() {
+int main(int argc, char const *argv[]) {
     int arr[] = {-4,5-13,43,-32,-5,100,93,-11,12, 11, 13, 5, 6};
     int size = sizeof(arr)/sizeof(arr[0]);
 
@@ -24,12 +24,11 @@ void print_array(int arr[], int size) {
 }
 
 void shift_negatives(int arr[], int size) {
-            int key, j;
-            for (int i = 0; i < size; i++) {
-                key = arr[i];
+            int i, j, current;
+            for (i = 1; i < size - 1; i++) {
+                current = arr[i];
 
-                // skip element if positive
-                if (key > 0)
+                if (current > 0)
                     continue;
 
                 j = i - 1;
@@ -37,8 +36,8 @@ void shift_negatives(int arr[], int size) {
                     arr[j + 1] = arr[j];
                     j = j - 1;
                 }
-                // Put negative element at its right position
-                arr[j + 1] = key;
+                // Put negative element at first positive element position
+                arr[j + 1] = current;
             }
 }
 
