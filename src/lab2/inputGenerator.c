@@ -6,18 +6,18 @@
 
 int main(int argc, char *argv[])
 {
-unsigned int seed;
-long nrIntegers;
-long maxInt;
-long i;
+    unsigned int seed;
+    int nrIntegers;
+    int maxInt;
+    int i;
 
-sscanf(argv[1],"%d", &seed);
-sscanf(argv[2],"%d", &nrIntegers);
-sscanf(argv[3],"%d", &maxInt);
+    sscanf(argv[1],"%d", &seed);
+    sscanf(argv[2],"%d", &nrIntegers);
+    sscanf(argv[3],"%d", &maxInt);
 
-printf("%d\n", nrIntegers);
+    printf("%d\n", nrIntegers);
 
-srand(seed);
-for(i=0; i<nrIntegers; i++) 
-printf("%d\n", (long)(maxInt * ((double)rand()/(double)RAND_MAX)));
+    srand(seed);
+    for(i=0; i<nrIntegers; i++)
+        printf("%d ", (int)(maxInt * ((double)rand()/(double)RAND_MAX)));
 }
