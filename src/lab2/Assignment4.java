@@ -35,7 +35,6 @@ public class Assignment4 {
         try (PrintWriter writer = new PrintWriter(new FileWriter(sortName + inputSize + ".csv", true))) {
             writer.write(String.valueOf(performance) + ',');
             writer.println();
-            System.out.println(sortName + inputSize + ".csv created");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,18 +58,23 @@ public class Assignment4 {
     }
 
     public static void main(String[] args) {
-        Integer inputSize = 1000;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter input size");
+        Integer inputSize = scanner.nextInt();
         Integer[] arr = getInputFileBySize(inputSize);
 
         for(int i = 0; i < 10; i++) {
-            Integer insertionSortPerformance = getInsertionSortPerformance(arr);
-            outputToCsv(insertionSortPerformance, "insertion", inputSize);
+            if (inputSize <= 100000) {
+                Integer insertionSortPerformance = getInsertionSortPerformance(arr);
+                outputToCsv(insertionSortPerformance, "insertion", inputSize);
+            }
 
             Integer mergeSortPerformance = getMergeSortPerformance(arr);
             outputToCsv(mergeSortPerformance, "merge", inputSize);
 
             Integer quickSortPerformance = getQuickSortPerformance(arr);
             outputToCsv(quickSortPerformance, "quicksort", inputSize);
+            System.out.println(i + " out of 10 loops finished");
         }
     }
 }
