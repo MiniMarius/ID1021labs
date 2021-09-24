@@ -6,6 +6,23 @@ import edu.princeton.cs.algs4.Insertion;
 import java.util.Arrays;
 
 public class Assignment5 {
+    private static int CUTOFF;
+    public static void insertionSort(Comparable[] a, int lo, int hi) {
+        for (int i = lo + 1; i < hi; i++) {
+            for (int j = i; j > lo && less(a[j], a[j-1]); j--) {
+                exch(a, j, j-1);
+            }
+        }
+        assert isSorted(a, lo, hi);
+    }
+
+    // exchange a[i] and a[j]
+    private static void exch(Object[] a, int i, int j) {
+        Object swap = a[i];
+        a[i] = a[j];
+        a[j] = swap;
+    }
+
     private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
         // precondition: a[lo .. mid] and a[mid+1 .. hi] are sorted subarrays
         assert isSorted(a, lo, mid);
@@ -27,14 +44,16 @@ public class Assignment5 {
     }
 
     // mergesort a[lo..hi] using auxiliary array aux[lo..hi]
-    private static void sortMerge(Comparable[] a, Comparable[] aux, int lo, int hi, Integer cutoff) {
-        if (hi <= lo + cutoff - 1) {
-            Insertion.sort(a, lo, hi);
+    private static void sortMerge(Comparable[] a, Comparable[] aux, int lo, int hi) {
+        if (hi <= lo + CUTOFF - 1) {
+            insertionSort(a, lo, hi);
+            System.out.println(isSorted(a, lo, hi));
             return;
         }
+
         int mid = lo + (hi - lo) / 2;
-        sortMerge(a, aux, lo, mid, cutoff);
-        sortMerge(a, aux, mid + 1, hi, cutoff);
+        sortMerge(a, aux, lo, mid);
+        sortMerge(a, aux, mid + 1, hi);
         merge(a, aux, lo, mid, hi);
     }
 
@@ -42,9 +61,9 @@ public class Assignment5 {
      * Rearranges the array in ascending order, using the natural order.
      * @param a the array to be sorted
      */
-    public static void sortMerge(Comparable[] a, Integer cutoff) {
+    public static void sortMerge(Comparable[] a) {
         Comparable[] aux = new Comparable[a.length];
-        sortMerge(a, aux, 0, a.length-1, cutoff);
+        sortMerge(a, aux, 0, a.length - 1);
     }
 
     private static boolean isSorted(Comparable[] a) {
@@ -63,8 +82,14 @@ public class Assignment5 {
 
     public static void main(String[] args) {
         Integer[] arr = {1, 120, 340, 50, 70, 10, 70, 20, 70, 40, 1240, 670, 4};
-        sortMerge(arr, 1);
+        long startTime = System.currentTimeMillis();
+        CUTOFF = 7;
+        sortMerge(arr);
+        long endTime = System.currentTimeMillis();
+        int totalTime = (int) (endTime - startTime);
+
         System.out.println(Arrays.toString(arr));
+        System.out.println(totalTime);
 
     }
 }
