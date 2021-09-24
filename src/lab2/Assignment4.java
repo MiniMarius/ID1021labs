@@ -4,10 +4,7 @@ import edu.princeton.cs.algs4.Insertion;
 import edu.princeton.cs.algs4.Merge;
 import edu.princeton.cs.algs4.Quick;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 public class Assignment4 {
@@ -34,13 +31,13 @@ public class Assignment4 {
         return (int) (endTime - startTime);
     }
 
-    public static void outputToCsv(Integer millis, String filename) {
-        try (PrintWriter writer = new PrintWriter(new File(filename + ".csv"))) {
-            String s = String.valueOf(millis) + ',';
-            writer.write(s);
-            System.out.println(filename + ".csv created");
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+    public static void outputToCsv(Integer performance, String sortName, Integer inputSize) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(sortName + inputSize + ".csv", true))) {
+            writer.write(String.valueOf(performance) + ',');
+            writer.println();
+            System.out.println(sortName + inputSize + ".csv created");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -62,15 +59,18 @@ public class Assignment4 {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = getInputFileBySize(1000);
-        Integer insertionSortPerformance = getInsertionSortPerformance(arr);
-        Integer mergeSortPerformance = getMergeSortPerformance(arr);
-        Integer quickSortPerformance = getQuickSortPerformance(arr);
-        System.out.println("average insertion time: " + insertionSortPerformance);
-        System.out.println("average merge time: " + mergeSortPerformance);
-        System.out.println("average quicksort time: " + quickSortPerformance);
-        outputToCsv(insertionSortPerformance, "insertion");
-        outputToCsv(mergeSortPerformance, "mergesort");
-        outputToCsv(quickSortPerformance, "quicksort");
+        Integer inputSize = 1000;
+        Integer[] arr = getInputFileBySize(inputSize);
+
+        for(int i = 0; i < 10; i++) {
+            Integer insertionSortPerformance = getInsertionSortPerformance(arr);
+            outputToCsv(insertionSortPerformance, "insertion", inputSize);
+
+            Integer mergeSortPerformance = getMergeSortPerformance(arr);
+            outputToCsv(mergeSortPerformance, "merge", inputSize);
+
+            Integer quickSortPerformance = getQuickSortPerformance(arr);
+            outputToCsv(quickSortPerformance, "quicksort", inputSize);
+        }
     }
 }
