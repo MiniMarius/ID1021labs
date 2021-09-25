@@ -37,14 +37,31 @@ public class Assignment4 {
         return (int) (endTime - startTime);
     }
 
-    public static void outputToCsv(Integer performance, String sortName, Integer inputSize) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(sortName + inputSize + ".csv", true))) {
-            writer.write(String.valueOf(performance) + ',');
+    public static void outputSortPerformance(Integer[] arr, Integer inputSize) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("sortperformance" + ".csv", true))) {
+            if (inputSize <= 100000) {
+                writer.write("insertion" + inputSize + ";");
+                for (int i = 0; i < 10; i++) {
+                    writer.write(String.valueOf(getInsertionSortPerformance(arr)) + ';');
+                }
+            }
+            writer.println();
+            writer.write("merge" + inputSize + ";");
+            for (int i = 0; i < 10; i++) {
+                writer.write(String.valueOf(getMergeSortPerformance(arr)) + ';');
+            }
+            writer.println();
+            writer.write("quick" + inputSize + ";");
+                for (int i = 0; i < 10; i++) {
+                    writer.write(String.valueOf(getQuickSortPerformance(arr)) + ';');
+                }
             writer.println();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public static Integer[] getInputFileBySize(Integer inputSize) {
         try {
@@ -68,19 +85,6 @@ public class Assignment4 {
         System.out.println("Enter input size");
         Integer inputSize = scanner.nextInt();
         Integer[] arr = getInputFileBySize(inputSize);
-
-        for(int i = 0; i < 10; i++) {
-            if (inputSize <= 100000) {
-                Integer insertionSortPerformance = getInsertionSortPerformance(arr);
-                outputToCsv(insertionSortPerformance, "insertion", inputSize);
-            }
-
-            Integer mergeSortPerformance = getMergeSortPerformance(arr);
-            outputToCsv(mergeSortPerformance, "merge", inputSize);
-
-            Integer quickSortPerformance = getQuickSortPerformance(arr);
-            outputToCsv(quickSortPerformance, "quicksort", inputSize);
-            System.out.println(i + 1 + " out of 10 loops finished");
-        }
+        outputSortPerformance(arr, inputSize);
     }
 }
