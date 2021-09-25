@@ -18,6 +18,14 @@ public class Assignment5 {
         }
     }
 
+    /**
+     * main sorting method with recursion
+     *
+     * @param array    the array to be sorted
+     * @param auxArray sub array of array
+     * @param lo       lowest index of array
+     * @param hi       highest index of array
+     */
     private static void sort(Comparable[] array, Comparable[] auxArray, int lo, int hi) {
         if (hi <= lo + CUTOFF) {
             insertionSort(auxArray, lo, hi);
@@ -45,21 +53,27 @@ public class Assignment5 {
         sort(aux, a, 0, a.length - 1);
     }
 
-    // sort array from a[lo] to a[hi] using insertion sort
+    /**
+     * sort array from a[lo] to a[hi] using insertion sort
+     */
     private static void insertionSort(Comparable[] a, int lo, int hi) {
         for (int i = lo; i <= hi; i++)
             for (int j = i; j > lo && less(a[j], a[j - 1]); j--)
                 exch(a, j, j - 1);
     }
 
-    // exchange a[i] and a[j]
+    /**
+     * exchange a[i] and a[j]
+     */
     private static void exch(Object[] a, int i, int j) {
         Object swap = a[i];
         a[i] = a[j];
         a[j] = swap;
     }
 
-    // is a[i] < a[j]?
+    /**
+     * is a[i] < a[j]?
+     */
     private static boolean less(Comparable a, Comparable b) {
         return a.compareTo(b) < 0;
     }
@@ -72,6 +86,12 @@ public class Assignment5 {
         return (endTime - startTime);
     }
 
+    /**
+     * Opens a .txt file corresponding to the wanted size of random integers
+     *
+     * @param inputSize the size of input array
+     * @return returns the parsed file containing an array with the amount of random integers equal to inputSize.
+     */
     private static Integer[] getInputFileBySize(Integer inputSize) {
         try {
             String inputFile = "src/inputFiles/" + inputSize + "ints.txt";
@@ -89,6 +109,14 @@ public class Assignment5 {
         return null;
     }
 
+
+    /**
+     * Calls methods responsible for timing the different sorting methods
+     * and writes the data to csv file
+     *
+     * @param arr       the array to be sorted
+     * @param inputSize the size of input array
+     */
     private static void outputSortPerformance(Integer[] arr, Integer inputSize) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("mergecutoff" + ".csv", true))) {
             for (int CUTOFF = 0; CUTOFF <= 30; CUTOFF++) {

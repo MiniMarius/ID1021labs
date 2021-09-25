@@ -7,7 +7,6 @@ import edu.princeton.cs.algs4.Merge;
 import edu.princeton.cs.algs4.Quick;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Assignment4 {
@@ -37,6 +36,13 @@ public class Assignment4 {
         return (endTime - startTime);
     }
 
+    /**
+     * Calls methods responsible for timing the different sorting methods
+     * and writes the data to csv file
+     *
+     * @param arr       the array to be sorted
+     * @param inputSize the size of input array
+     */
     private static void outputSortPerformance(Integer[] arr, Integer inputSize) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("sortperformance" + ".csv", true))) {
             if (inputSize <= 100000) {
@@ -54,10 +60,10 @@ public class Assignment4 {
             }
             writer.println();
             writer.write("quick" + inputSize + ";");
-                for (int i = 0; i < 10; i++) {
-                    writer.write(String.valueOf(getQuickSortPerformance(arr)) + ';');
-                    System.out.println(i + 1 + " out of 10 quick sorts done");
-                }
+            for (int i = 0; i < 10; i++) {
+                writer.write(String.valueOf(getQuickSortPerformance(arr)) + ';');
+                System.out.println(i + 1 + " out of 10 quick sorts done");
+            }
             writer.println();
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,7 +71,12 @@ public class Assignment4 {
     }
 
 
-
+    /**
+     * Opens a .txt file corresponding to the wanted size of random integers
+     *
+     * @param inputSize the size of input array
+     * @return returns the parsed file containing an array with the amount of random integers equal to inputSize.
+     */
     private static Integer[] getInputFileBySize(Integer inputSize) {
         try {
             String inputFile = "src/inputFiles/" + inputSize + "ints.txt";

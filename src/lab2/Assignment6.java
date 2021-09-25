@@ -5,44 +5,57 @@ package lab2;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Assignment6 {
 
-    // return the index of the median element among a[i], a[j], and a[k]
+    /**
+     * return the index of the median element among a[i], a[j], and a[k]
+     * @param a the inputted array
+     * @return the median of a given array
+     */
     private static int median3(Comparable[] a, int i, int j, int k) {
         return (less(a[i], a[j]) ?
                 (less(a[j], a[k]) ? j : less(a[i], a[k]) ? k : i) :
                 (less(a[k], a[j]) ? j : less(a[k], a[i]) ? k : i));
     }
 
-    // quicksortMOT the subarray from a[lo] to a[hi]
+    /**
+     * quicksortMOT the subarray from a[lo] to a[hi]
+     */
     private static void sortMOT(Comparable[] a, int lo, int hi) {
         int n = hi - lo + 1;
         if (hi <= lo) return;
-        int m = median3(a, lo, lo + n/2, hi);
+        int m = median3(a, lo, lo + n / 2, hi);
         exch(a, m, lo);
         int j = partition(a, lo, hi);
         sortMOT(a, lo, j - 1);
         sortMOT(a, j + 1, hi);
     }
 
-    //starting method of MOT quicksort
+    /**
+     * //starting method of MOT quicksort
+     *
+     * @param a the array to be sorted
+     */
     public static void sortMOT(Comparable[] a) {
         StdRandom.shuffle(a);
         sortMOT(a, 0, a.length - 1);
     }
 
-    // quicksort the subarray from a[lo] to a[hi]
+    /**
+     * quicksort the subarray from a[lo] to a[hi]
+     */
     private static void sort(Comparable[] a, int lo, int hi) {
         if (hi <= lo) return;
         int j = partition(a, lo, hi);
-        sort(a, lo, j-1);
-        sort(a, j+1, hi);
+        sort(a, lo, j - 1);
+        sort(a, j + 1, hi);
     }
 
-    //starting method of normal quicksort
+    /**
+     * starting method of normal quicksort
+     */
     public static void sort(Comparable[] a) {
         StdRandom.shuffle(a);
         sort(a, 0, a.length - 1);
@@ -52,8 +65,16 @@ public class Assignment6 {
         return v.compareTo(w) < 0;
     }
 
-    // partition the subarray a[lo..hi] so that a[lo..j-1] <= a[j] <= a[j+1..hi]
-    // and return the index j.
+    /**
+     * partition the subarray a[lo..hi] so that a[lo..j-1] <= a[j] <= a[j+1..hi]
+     * and return the index j.
+     *
+     * @param a  the array to be sorted
+     * @param lo first index of subarray
+     * @param hi highest index of subarray
+     * @return a correctly partitioned subarray
+     */
+
     private static int partition(Comparable[] a, int lo, int hi) {
         int i = lo;
         int j = hi + 1;
@@ -83,13 +104,21 @@ public class Assignment6 {
         return j;
     }
 
-    // exchange a[i] and a[j]
+    /**
+     * exchange a[i] and a[j]
+     */
     private static void exch(Object[] a, int i, int j) {
         Object swap = a[i];
         a[i] = a[j];
         a[j] = swap;
     }
 
+    /**
+     * Sorts an array and returns the timed performance
+     *
+     * @param a the array to be copied and then sorted
+     * @return the timed sorting performance for quick sort
+     */
     private static Long getQuickSortPerformance(Integer[] a) {
         Integer[] copyArr = a.clone();
         long startTime = System.currentTimeMillis();
@@ -98,6 +127,12 @@ public class Assignment6 {
         return (endTime - startTime);
     }
 
+    /**
+     * Sorts an array and returns the timed performance
+     *
+     * @param a the array to be copied and then sorted
+     * @return the timed sorting performance for quick sort median of three
+     */
     private static Long getQuickSortMOTPerformance(Integer[] a) {
         Integer[] copyArr = a.clone();
         long startTime = System.currentTimeMillis();
@@ -107,6 +142,13 @@ public class Assignment6 {
     }
 
 
+    /**
+     * Calls methods responsible for timing the different sorting methods
+     * and writes the data to csv file
+     *
+     * @param arr       the array to be sorted
+     * @param inputSize the size of input array
+     */
     private static void outputSortPerformance(Integer[] arr, Integer inputSize) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("A6quicksort" + ".csv", true))) {
             writer.write("quickMOT" + inputSize + ";");
@@ -126,6 +168,12 @@ public class Assignment6 {
         }
     }
 
+    /**
+     * Opens a .txt file corresponding to the wanted size of random integers
+     *
+     * @param inputSize the size of input array
+     * @return returns the parsed file containing an array with the amount of random integers equal to inputSize.
+     */
     private static Integer[] getInputFileBySize(Integer inputSize) {
         try {
             String inputFile = "src/inputFiles/" + inputSize + "ints.txt";
