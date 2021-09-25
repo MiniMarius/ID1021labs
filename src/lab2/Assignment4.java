@@ -1,3 +1,5 @@
+//README this uses princeton's implementations of insertion, merge and quicksort
+// Used for speed comparison between the different sorting algorithms
 package lab2;
 
 import edu.princeton.cs.algs4.Insertion;

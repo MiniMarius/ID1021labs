@@ -13,7 +13,6 @@ public class Assignment5 {
                 exch(a, j, j-1);
             }
         }
-        assert isSorted(a, lo, hi);
     }
 
     // exchange a[i] and a[j]
@@ -47,7 +46,6 @@ public class Assignment5 {
     private static void sortMerge(Comparable[] a, Comparable[] aux, int lo, int hi) {
         if (hi <= lo + CUTOFF - 1) {
             insertionSort(a, lo, hi);
-            System.out.println(isSorted(a, lo, hi));
             return;
         }
 
@@ -81,7 +79,7 @@ public class Assignment5 {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = {1, 120, 340, 50, 70, 10, 70, 20, 70, 40, 1240, 670, 4};
+        Integer[] arr = {1, 120, 340, 50, 70, 10, 70, 20, 70, 40, 1240, 670};
         long startTime = System.currentTimeMillis();
         CUTOFF = 7;
         sortMerge(arr);
