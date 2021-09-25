@@ -78,7 +78,7 @@ public class Assignment4 {
 
             Integer quickSortPerformance = getQuickSortPerformance(arr);
             outputToCsv(quickSortPerformance, "quicksort", inputSize);
-            System.out.println(i + " out of 10 loops finished");
+            System.out.println(i + 1 + " out of 10 loops finished");
         }
     }
 }
