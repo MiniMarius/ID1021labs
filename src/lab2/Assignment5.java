@@ -1,18 +1,53 @@
-//README this implements mergesort. Used for comparison between different cut-off values
+//README this implements princeton's mergesort. Used for comparison between different cut-off values
 package lab2;
-
-import edu.princeton.cs.algs4.Insertion;
 
 import java.util.Arrays;
 
 public class Assignment5 {
-    private static int CUTOFF;
-    public static void insertionSort(Comparable[] a, int lo, int hi) {
-        for (int i = lo + 1; i < hi; i++) {
-            for (int j = i; j > lo && less(a[j], a[j-1]); j--) {
-                exch(a, j, j-1);
-            }
+    private static final int CUTOFF = 7;  // cutoff to insertion sort
+
+    private static void merge(Comparable[] array, Comparable[] auxArray, int lo, int mid, int hi) {
+        int i = lo, j = mid + 1;
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid) auxArray[k] = array[j++];
+            else if (j > hi) auxArray[k] = array[i++];
+            else if (less(array[j], array[i])) auxArray[k] = array[j++];   // to ensure stability
+            else auxArray[k] = array[i++];
         }
+    }
+
+    private static void sort(Comparable[] array, Comparable[] auxArray, int lo, int hi) {
+        if (hi <= lo + CUTOFF) {
+            insertionSort(auxArray, lo, hi);
+            return;
+        }
+        int mid = lo + (hi - lo) / 2;
+        sort(auxArray, array, lo, mid);
+        sort(auxArray, array, mid + 1, hi);
+
+        //copy from initial array
+        if (!less(array[mid + 1], array[mid])) {
+            for (int i = lo; i <= hi; i++) auxArray[i] = array[i];
+            return;
+        }
+        merge(array, auxArray, lo, mid, hi);
+    }
+
+    /**
+     * "Starting" method to sort the array in ascending order
+     *
+     * @param a the array to be sorted
+     */
+    public static void sort(Comparable[] a) {
+        Comparable[] aux = a.clone();
+        sort(aux, a, 0, a.length - 1);
+    }
+
+    // sort array from a[lo] to a[hi] using insertion sort
+    private static void insertionSort(Comparable[] a, int lo, int hi) {
+        for (int i = lo; i <= hi; i++)
+            for (int j = i; j > lo && less(a[j], a[j - 1]); j--)
+                exch(a, j, j - 1);
     }
 
     // exchange a[i] and a[j]
@@ -22,67 +57,15 @@ public class Assignment5 {
         a[j] = swap;
     }
 
-    private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
-        // precondition: a[lo .. mid] and a[mid+1 .. hi] are sorted subarrays
-        assert isSorted(a, lo, mid);
-        assert isSorted(a, mid+1, hi);
-
-        // copy to aux[]
-        for (int k = lo; k <= hi; k++) {
-            aux[k] = a[k];
-        }
-
-        // merge back to a[]
-        int i = lo, j = mid+1;
-        for (int k = lo; k <= hi; k++) {
-            if      (i > mid)              a[k] = aux[j++];
-            else if (j > hi)               a[k] = aux[i++];
-            else if (less(aux[j], aux[i])) a[k] = aux[j++];
-            else                           a[k] = aux[i++];
-        }
-    }
-
-    // mergesort a[lo..hi] using auxiliary array aux[lo..hi]
-    private static void sortMerge(Comparable[] a, Comparable[] aux, int lo, int hi) {
-        if (hi <= lo + CUTOFF - 1) {
-            insertionSort(a, lo, hi);
-            return;
-        }
-
-        int mid = lo + (hi - lo) / 2;
-        sortMerge(a, aux, lo, mid);
-        sortMerge(a, aux, mid + 1, hi);
-        merge(a, aux, lo, mid, hi);
-    }
-
-    /**
-     * Rearranges the array in ascending order, using the natural order.
-     * @param a the array to be sorted
-     */
-    public static void sortMerge(Comparable[] a) {
-        Comparable[] aux = new Comparable[a.length];
-        sortMerge(a, aux, 0, a.length - 1);
-    }
-
-    private static boolean isSorted(Comparable[] a) {
-        return isSorted(a, 0, a.length - 1);
-    }
-
-    private static boolean isSorted(Comparable[] a, int lo, int hi) {
-        for (int i = lo + 1; i <= hi; i++)
-            if (less(a[i], a[i-1])) return false;
-        return true;
-    }
-
-    private static boolean less(Comparable v, Comparable w) {
-        return v.compareTo(w) < 0;
+    // is a[i] < a[j]?
+    private static boolean less(Comparable a, Comparable b) {
+        return a.compareTo(b) < 0;
     }
 
     public static void main(String[] args) {
         Integer[] arr = {1, 120, 340, 50, 70, 10, 70, 20, 70, 40, 1240, 670};
         long startTime = System.currentTimeMillis();
-        CUTOFF = 7;
-        sortMerge(arr);
+        sort(arr);
         long endTime = System.currentTimeMillis();
         int totalTime = (int) (endTime - startTime);
 
