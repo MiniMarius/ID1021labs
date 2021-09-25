@@ -26,19 +26,15 @@ void print_array(int arr[], int size) {
 void shift_negatives(int arr[], int size) {
             if (size < 1) return;
             int i, j, current;
-            for (i = 1; i < size - 1; i++) {
+            for (i = 0; i < size; i++) {
                 current = arr[i];
-
-                if (current > 0)
-                    continue;
-                j = i - 1;
-
-                while (j >= 0 && arr[j] > 0) {
-                    arr[j + 1] = arr[j];
-                    j = j - 1;
+                if (current < 0) {
+                    if (i != j) {
+                        arr[i] = arr[j];
+                        arr[j] = current;
+                    }
+                    j++;
                 }
-                // Put negative element at first positive element position
-                arr[j + 1] = current;
             }
 }
 
