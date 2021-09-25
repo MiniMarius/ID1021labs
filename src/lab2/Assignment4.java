@@ -5,28 +5,32 @@ import edu.princeton.cs.algs4.Merge;
 import edu.princeton.cs.algs4.Quick;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Assignment4 {
 
     public static Integer getInsertionSortPerformance(Integer[] a) {
+        Integer[] copyArr = a.clone();
         long startTime = System.currentTimeMillis();
-        Insertion.sort(a);
+        Insertion.sort(copyArr);
         long endTime = System.currentTimeMillis();
         return (int) (endTime - startTime);
     }
 
     public static Integer getMergeSortPerformance(Integer[] a) {
+        Integer[] copyArr = a.clone();
         long startTime = System.currentTimeMillis();
-        Merge.sort(a);
+        Merge.sort(copyArr);
         long endTime = System.currentTimeMillis();
         return (int) (endTime - startTime);
     }
 
 
     public static Integer getQuickSortPerformance(Integer[] a) {
+        Integer[] copyArr = a.clone();
         long startTime = System.currentTimeMillis();
-        Quick.sort(a);
+        Quick.sort(copyArr);
         long endTime = System.currentTimeMillis();
         return (int) (endTime - startTime);
     }
