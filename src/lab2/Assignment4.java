@@ -43,17 +43,20 @@ public class Assignment4 {
                 writer.write("insertion" + inputSize + ";");
                 for (int i = 0; i < 10; i++) {
                     writer.write(String.valueOf(getInsertionSortPerformance(arr)) + ';');
+                    System.out.println(i + 1 + " out of 10 insertion sorts done");
                 }
             }
             writer.println();
             writer.write("merge" + inputSize + ";");
             for (int i = 0; i < 10; i++) {
                 writer.write(String.valueOf(getMergeSortPerformance(arr)) + ';');
+                System.out.println(i + 1 + " out of 10 merge sorts done");
             }
             writer.println();
             writer.write("quick" + inputSize + ";");
                 for (int i = 0; i < 10; i++) {
                     writer.write(String.valueOf(getQuickSortPerformance(arr)) + ';');
+                    System.out.println(i + 1 + " out of 10 quick sorts done");
                 }
             writer.println();
         } catch (IOException e) {
