@@ -1,10 +1,14 @@
 //README this implements princeton's mergesort. Used for comparison between different cut-off values
 package lab2;
 
+import edu.princeton.cs.algs4.Merge;
+
+import java.io.*;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Assignment5 {
-    private static final int CUTOFF = 7;  // cutoff to insertion sort
+    private static int CUTOFF;  // cutoff to insertion sort
 
     private static void merge(Comparable[] array, Comparable[] auxArray, int lo, int mid, int hi) {
         int i = lo, j = mid + 1;
@@ -62,15 +66,52 @@ public class Assignment5 {
         return a.compareTo(b) < 0;
     }
 
-    public static void main(String[] args) {
-        Integer[] arr = {1, 120, 340, 50, 70, 10, 70, 20, 70, 40, 1240, 670};
+    private static Long getMergeSortPerformance(Integer[] a) {
+        Integer[] copyArr = a.clone();
         long startTime = System.currentTimeMillis();
-        sort(arr);
+        sort(copyArr);
         long endTime = System.currentTimeMillis();
-        int totalTime = (int) (endTime - startTime);
+        return (endTime - startTime);
+    }
 
-        System.out.println(Arrays.toString(arr));
-        System.out.println(totalTime);
+    private static Integer[] getInputFileBySize(Integer inputSize) {
+        try {
+            String inputFile = "src/inputFiles/" + inputSize + "ints.txt";
+            Scanner in = new Scanner(new FileReader(inputFile));
+            Integer[] numbers = new Integer[in.nextInt()];
+            for (int i = 0; i < numbers.length; i++) {
+                if (in.hasNextInt()) {
+                    numbers[i] = in.nextInt();
+                }
+            }
+            return numbers;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    private static void outputSortPerformance(Integer[] arr, Integer inputSize) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("mergecutoff" + ".csv", true))) {
+            for (int CUTOFF = 0; CUTOFF <= 30; CUTOFF++) {
+                writer.write("Cutoff" + CUTOFF + ";");
+                for (int i = 0; i < 10; i++) {
+                    writer.write(String.valueOf(getMergeSortPerformance(arr)) + ';');
+                    System.out.println(i + 1 + " out of 10 loops for cutoff value: " + CUTOFF);
+                }
+                writer.println();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter input size");
+        Integer inputSize = scanner.nextInt();
+        Integer[] arr = getInputFileBySize(inputSize);
+        outputSortPerformance(arr, inputSize);
     }
 }
