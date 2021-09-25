@@ -1,4 +1,4 @@
-//README this implements quicksort. Used for comparison between median of three and first element of each sub-array
+//README this implements princeton's quicksort. Used for comparison between median of three and first element of each sub-array
 //as partitioning element
 package lab2;
 
