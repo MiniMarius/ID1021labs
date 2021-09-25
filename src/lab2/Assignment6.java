@@ -4,23 +4,48 @@ package lab2;
 
 import edu.princeton.cs.algs4.StdRandom;
 
+import java.io.*;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Assignment6 {
 
-    // quicksort the subarray from a[lo] to a[hi]
-    private static void sortQuick(Comparable[] a, int lo, int hi) {
-        if (hi <= lo) return;
-        int j = partition(a, lo, hi);
-        sortQuick(a, lo, j-1);
-        sortQuick(a, j+1, hi);
-        assert isSorted(a, lo, hi);
+    // return the index of the median element among a[i], a[j], and a[k]
+    private static int median3(Comparable[] a, int i, int j, int k) {
+        return (less(a[i], a[j]) ?
+                (less(a[j], a[k]) ? j : less(a[i], a[k]) ? k : i) :
+                (less(a[k], a[j]) ? j : less(a[k], a[i]) ? k : i));
     }
 
-    public static void sortQuick(Comparable[] a) {
+    // quicksortMOT the subarray from a[lo] to a[hi]
+    private static void sortMOT(Comparable[] a, int lo, int hi) {
+        int n = hi - lo + 1;
+        if (hi <= lo) return;
+        int m = median3(a, lo, lo + n/2, hi);
+        exch(a, m, lo);
+        int j = partition(a, lo, hi);
+        sortMOT(a, lo, j - 1);
+        sortMOT(a, j + 1, hi);
+    }
+
+    //starting method of MOT quicksort
+    public static void sortMOT(Comparable[] a) {
         StdRandom.shuffle(a);
-        sortQuick(a, 0, a.length - 1);
-        assert isSorted(a);
+        sortMOT(a, 0, a.length - 1);
+    }
+
+    // quicksort the subarray from a[lo] to a[hi]
+    private static void sort(Comparable[] a, int lo, int hi) {
+        if (hi <= lo) return;
+        int j = partition(a, lo, hi);
+        sort(a, lo, j-1);
+        sort(a, j+1, hi);
+    }
+
+    //starting method of normal quicksort
+    public static void sort(Comparable[] a) {
+        StdRandom.shuffle(a);
+        sort(a, 0, a.length - 1);
     }
 
     private static boolean less(Comparable v, Comparable w) {
@@ -58,16 +83,6 @@ public class Assignment6 {
         return j;
     }
 
-    private static boolean isSorted(Comparable[] a) {
-        return isSorted(a, 0, a.length - 1);
-    }
-
-    private static boolean isSorted(Comparable[] a, int lo, int hi) {
-        for (int i = lo + 1; i <= hi; i++)
-            if (less(a[i], a[i-1])) return false;
-        return true;
-    }
-
     // exchange a[i] and a[j]
     private static void exch(Object[] a, int i, int j) {
         Object swap = a[i];
@@ -75,10 +90,64 @@ public class Assignment6 {
         a[j] = swap;
     }
 
-    public static void main(String[] args) {
-        Integer[] arr = {1, 120, 340, 50, 70, 10, 70, 20, 70, 40, 1240, 670, 4};
-        sortQuick(arr);
-        System.out.println(Arrays.toString(arr));
+    private static Long getQuickSortPerformance(Integer[] a) {
+        Integer[] copyArr = a.clone();
+        long startTime = System.currentTimeMillis();
+        sort(copyArr);
+        long endTime = System.currentTimeMillis();
+        return (endTime - startTime);
+    }
 
+    private static Long getQuickSortMOTPerformance(Integer[] a) {
+        Integer[] copyArr = a.clone();
+        long startTime = System.currentTimeMillis();
+        sortMOT(copyArr);
+        long endTime = System.currentTimeMillis();
+        return (endTime - startTime);
+    }
+
+
+    private static void outputSortPerformance(Integer[] arr, Integer inputSize) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("A6quicksort" + ".csv", true))) {
+            writer.write("quickMOT" + inputSize + ";");
+            for (int i = 0; i < 10; i++) {
+                writer.write(String.valueOf(getQuickSortMOTPerformance(arr)) + ';');
+                System.out.println(i + 1 + " out of 10 quicksortMOTs done");
+            }
+            writer.println();
+            writer.write("quicknormal" + inputSize + ";");
+            for (int i = 0; i < 10; i++) {
+                writer.write(String.valueOf(getQuickSortPerformance(arr)) + ';');
+                System.out.println(i + 1 + " out of 10 quick sorts done");
+            }
+            writer.println();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Integer[] getInputFileBySize(Integer inputSize) {
+        try {
+            String inputFile = "src/inputFiles/" + inputSize + "ints.txt";
+            Scanner in = new Scanner(new FileReader(inputFile));
+            Integer[] numbers = new Integer[in.nextInt()];
+            for (int i = 0; i < numbers.length; i++) {
+                if (in.hasNextInt()) {
+                    numbers[i] = in.nextInt();
+                }
+            }
+            return numbers;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter input size");
+        Integer inputSize = scanner.nextInt();
+        Integer[] arr = getInputFileBySize(inputSize);
+        outputSortPerformance(arr, inputSize);
     }
 }

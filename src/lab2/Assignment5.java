@@ -1,10 +1,8 @@
 //README this implements princeton's mergesort. Used for comparison between different cut-off values
 package lab2;
 
-import edu.princeton.cs.algs4.Merge;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Assignment5 {
@@ -29,7 +27,7 @@ public class Assignment5 {
         sort(auxArray, array, lo, mid);
         sort(auxArray, array, mid + 1, hi);
 
-        //copy from initial array
+        //copy of initial array
         if (!less(array[mid + 1], array[mid])) {
             for (int i = lo; i <= hi; i++) auxArray[i] = array[i];
             return;
@@ -68,9 +66,9 @@ public class Assignment5 {
 
     private static Long getMergeSortPerformance(Integer[] a) {
         Integer[] copyArr = a.clone();
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         sort(copyArr);
-        long endTime = System.currentTimeMillis();
+        long endTime = System.nanoTime();
         return (endTime - startTime);
     }
 
