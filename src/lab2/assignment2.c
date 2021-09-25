@@ -14,6 +14,9 @@ int main(int argc, char const *argv[])
     insertion_sort(arr, n);
     return 0;
 }
+
+// insertion sort. Iterates up the array and leaves a sorted list behind it.
+// checks at each index for a larger value behind it.
 void insertion_sort(int arr[], int size) {
     int i, j;
     int count_of_swaps = 0;
@@ -23,20 +26,22 @@ void insertion_sort(int arr[], int size) {
             int temp = arr[j-1];
             arr[j-1] = arr[j];
             arr[j] = temp;
-            j -=1;
+            j--;
             print_array(arr, size);
             printf("swap count:  %d\n", ++count_of_swaps);
         }
     }
 
 }
-
+//prints an array based on given size
 void print_array(int arr[], int size) {
     int i;
     for (i = 0; i < size; i++)
         printf("%d ", arr[i]);
 }
 
+//counts how unsorted the given array is i.e how many swaps needs to be done for array
+// to become sorted.
 void count_inversions(int arr[], int size) {
     int i,j;
     int inversion_count = 0;
