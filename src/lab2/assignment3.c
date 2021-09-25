@@ -23,9 +23,11 @@ void print_array(int arr[], int size) {
         printf("%d ", arr[i]);
 }
 
+//traverses the array and checks for 2 conditions. If current value is negative and if i != j.
+// swap the element at i and j.
 void shift_negatives(int arr[], int size) {
             if (size < 1) return;
-            int i, j, current;
+            int i, j = 0, current;
             for (i = 0; i < size; i++) {
                 current = arr[i];
                 if (current < 0) {
