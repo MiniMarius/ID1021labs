@@ -12,29 +12,29 @@ import java.util.Scanner;
 
 public class Assignment4 {
 
-    public static Integer getInsertionSortPerformance(Integer[] a) {
+    public static Long getInsertionSortPerformance(Integer[] a) {
         Integer[] copyArr = a.clone();
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         Insertion.sort(copyArr);
-        long endTime = System.currentTimeMillis();
-        return (int) (endTime - startTime);
+        long endTime = System.nanoTime();
+        return (endTime - startTime);
     }
 
-    public static Integer getMergeSortPerformance(Integer[] a) {
+    public static Long getMergeSortPerformance(Integer[] a) {
         Integer[] copyArr = a.clone();
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         Merge.sort(copyArr);
-        long endTime = System.currentTimeMillis();
-        return (int) (endTime - startTime);
+        long endTime = System.nanoTime();
+        return (endTime - startTime);
     }
 
 
-    public static Integer getQuickSortPerformance(Integer[] a) {
+    public static Long getQuickSortPerformance(Integer[] a) {
         Integer[] copyArr = a.clone();
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         Quick.sort(copyArr);
-        long endTime = System.currentTimeMillis();
-        return (int) (endTime - startTime);
+        long endTime = System.nanoTime();
+        return (endTime - startTime);
     }
 
     public static void outputSortPerformance(Integer[] arr, Integer inputSize) {
