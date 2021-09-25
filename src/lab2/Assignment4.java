@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Assignment4 {
 
-    public static Long getInsertionSortPerformance(Integer[] a) {
+    private static Long getInsertionSortPerformance(Integer[] a) {
         Integer[] copyArr = a.clone();
         long startTime = System.nanoTime();
         Insertion.sort(copyArr);
@@ -20,7 +20,7 @@ public class Assignment4 {
         return (endTime - startTime);
     }
 
-    public static Long getMergeSortPerformance(Integer[] a) {
+    private static Long getMergeSortPerformance(Integer[] a) {
         Integer[] copyArr = a.clone();
         long startTime = System.nanoTime();
         Merge.sort(copyArr);
@@ -29,7 +29,7 @@ public class Assignment4 {
     }
 
 
-    public static Long getQuickSortPerformance(Integer[] a) {
+    private static Long getQuickSortPerformance(Integer[] a) {
         Integer[] copyArr = a.clone();
         long startTime = System.nanoTime();
         Quick.sort(copyArr);
@@ -37,7 +37,7 @@ public class Assignment4 {
         return (endTime - startTime);
     }
 
-    public static void outputSortPerformance(Integer[] arr, Integer inputSize) {
+    private static void outputSortPerformance(Integer[] arr, Integer inputSize) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("sortperformance" + ".csv", true))) {
             if (inputSize <= 100000) {
                 writer.write("insertion" + inputSize + ";");
@@ -66,7 +66,7 @@ public class Assignment4 {
 
 
 
-    public static Integer[] getInputFileBySize(Integer inputSize) {
+    private static Integer[] getInputFileBySize(Integer inputSize) {
         try {
             String inputFile = "src/inputFiles/" + inputSize + "ints.txt";
             Scanner in = new Scanner(new FileReader(inputFile));
