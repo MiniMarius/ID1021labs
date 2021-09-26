@@ -1,5 +1,5 @@
-//README this implements insertion sort sorted in descending order instead of ascending order.
-//code copied from assignment 2, nothing changed yet.
+//README this implements insertion sort. Calling inverse_arr_values before and after insertion sort makes
+//the array be sorted in descending order
 #include <stdlib.h>
 #include <stdio.h>
 
