@@ -1,4 +1,5 @@
 //README this implements a method count_inversions which counts the number of inversions in the input array and prints a list of all inversions
+//time complexity is O(n^2) since we have a nested loop that both iterate over n amount of items.
 #include <stdlib.h>
 #include <stdio.h>
 
