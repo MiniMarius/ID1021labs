@@ -1,6 +1,8 @@
 //README this uses princeton's implementations of insertion, merge and quicksort
 // Used for speed comparison between the different sorting algorithms
 // every sorting algorithm is run 10 times for more trustworthy results
+// if run outside project folder with own input files, inputFile String must be changed
+// to whatever path you use
 package lab2;
 
 import edu.princeton.cs.algs4.Insertion;
