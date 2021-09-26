@@ -1,4 +1,5 @@
 //README this implements princeton's mergesort. Used for comparison between different cut-off values
+//mergesort is run 10 times at each cutoff value between 0-30 for more trustworthy results
 package lab2;
 
 
