@@ -1,5 +1,8 @@
 //README this implements a method count_inversions which counts the number of inversions in the input array and prints a list of all inversions
-//time complexity is O(n^2) since we have a nested loop that both iterate over n amount of items.
+//time complexity is O(n^2). Outer loop runs n times. For every outer loop the inner loop must run n-i times
+//since j is i + 1 and i grows per outer loop. Using gauss summation we can calculate it by
+//n(n-1)/2 = n^2/2 — n/2 = O(n^2)
+
 #include <stdlib.h>
 #include <stdio.h>
 

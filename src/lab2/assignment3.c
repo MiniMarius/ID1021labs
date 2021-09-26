@@ -1,5 +1,6 @@
 //README this takes an array of integers and puts all the negative elements before the positive. No sorting methods used.
-
+//time complexity is O(n) since we're iterating over n amount of elements in the shift_negatives loop
+// n * O(1) = O(n)
 #include <stdio.h>
 #include <math.h>
 
