@@ -119,7 +119,7 @@ public class Assignment5 {
      */
     private static void outputSortPerformance(Integer[] arr, Integer inputSize) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("mergecutoff" + ".csv", true))) {
-            for (int CUTOFF = 0; CUTOFF <= 30; CUTOFF++) {
+            for (CUTOFF = 0; CUTOFF <= 30; CUTOFF++) {
                 writer.write("Cutoff" + CUTOFF + ";");
                 for (int i = 0; i < 10; i++) {
                     writer.write(String.valueOf(getMergeSortPerformance(arr)) + ';');
