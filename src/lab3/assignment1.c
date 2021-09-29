@@ -1,4 +1,5 @@
 //README this is a simple filter that removes all characters that are not alphabetic, blank or newline.
+//using file pointers to stdin/out for external redirecting of these as you please
 #include <stdio.h>
 #include <ctype.h>
 
@@ -10,6 +11,7 @@ int main(void)
     return filtered_stream;
 }
 
+//filter that puts blankspace for all characters that are not alphabetic, blank or newline
 int filter(FILE *input, FILE *output )
 {
     while (!feof(input)) {
