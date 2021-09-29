@@ -1,5 +1,6 @@
 //README this is a simple filter that removes all characters that are not alphabetic, blank or newline.
 #include <stdio.h>
+#include <ctype.h>
 
 int filter(FILE *input, FILE *output);
 int main(void)
