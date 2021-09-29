@@ -9,7 +9,6 @@ import edu.princeton.cs.algs4.StdOut;
 public class Assignment2 {
 
 
-
     public static void main(String[] args) {
         int distinct = 0, words = 0;
         int minlen = Integer.parseInt(args[0]);
@@ -22,8 +21,7 @@ public class Assignment2 {
             words++;
             if (st.contains(key)) {
                 st.put(key, st.get(key) + 1);
-            }
-            else {
+            } else {
                 st.put(key, 1);
                 distinct++;
             }
@@ -42,4 +40,4 @@ public class Assignment2 {
         StdOut.println("words    = " + words);
     }
 }
-}
+
