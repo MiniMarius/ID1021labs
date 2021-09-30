@@ -3,17 +3,11 @@
 package lab3;
 
 import edu.princeton.cs.algs4.Queue;
-import edu.princeton.cs.algs4.ST;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Arrays;
+import java.io.*;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Assignment2<Key extends Comparable<Key>, Value> {
     private static final int INIT_CAPACITY = 2;
@@ -367,14 +361,23 @@ public class Assignment2<Key extends Comparable<Key>, Value> {
         return true;
     }
 
+    private static void outputSTperformance(Long timedPerformance) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("a2performance" + ".csv", true))) {
+            writer.write(String.valueOf(timedPerformance + ';'));
+            writer.println();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         System.setIn(new FileInputStream("src/lab3/theText.txt"));
-
+        long startTime = System.currentTimeMillis();
         int distinct = 0, words = 0;
         Assignment2<String, Integer> st = new Assignment2<>();
 
         // compute frequency counts
-        while (!StdIn.isEmpty()) {
+        while (!StdIn.isEmpty() && words < 1000) {
             String key = StdIn.readString();
             words++;
             if (st.contains(key)) {
@@ -396,6 +399,8 @@ public class Assignment2<Key extends Comparable<Key>, Value> {
         StdOut.println(max + " " + st.get(max));
         StdOut.println("distinct = " + distinct);
         StdOut.println("words    = " + words);
+        long endTime = System.currentTimeMillis();
+        outputSTperformance(endTime - startTime);
     }
 }
 
