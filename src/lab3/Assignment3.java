@@ -127,7 +127,7 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
         assert check();
     }
 
-    private Assignment3.Node deleteMin(Node x) {
+    private Node deleteMin(Node x) {
         if (x.left == null) return x.right;
         x.left = deleteMin(x.left);
         x.size = size(x.left) + size(x.right) + 1;
@@ -145,7 +145,7 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
         assert check();
     }
 
-    private Assignment3.Node deleteMax(Node x) {
+    private Node deleteMax(Node x) {
         if (x.right == null) return x.left;
         x.right = deleteMax(x.right);
         x.size = size(x.left) + size(x.right) + 1;
@@ -165,7 +165,7 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
         assert check();
     }
 
-    private Assignment3.Node delete(Node x, Key key) {
+    private Node delete(Node x, Key key) {
         if (x == null) return null;
 
         int cmp = key.compareTo(x.key);
