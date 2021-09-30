@@ -1,3 +1,4 @@
+//README this program shows how evenly the hashcodes are distributed
 package lab3;
 
 import edu.princeton.cs.algs4.StdIn;
@@ -16,7 +17,7 @@ public class Assignment5 {
         Map<String, Integer> map = new HashMap<>();
 
         // compute frequency counts
-        while (!StdIn.isEmpty() && words < 1000) {
+        while (!StdIn.isEmpty()) {
             String key = StdIn.readString();
             words++;
             if (map.containsKey(key)) {
@@ -32,6 +33,10 @@ public class Assignment5 {
         for (String word : map.keySet()) {
             if (map.get(word) > map.get(max))
                 max = word;
+        }
+
+        for (String word : map.keySet()) {
+            System.out.println("Hash code is: " + word.hashCode());
         }
 
         StdOut.println(max + " " + map.get(max));
