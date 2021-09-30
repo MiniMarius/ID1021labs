@@ -7,6 +7,8 @@ import edu.princeton.cs.algs4.ST;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Arrays;
@@ -365,36 +367,15 @@ public class Assignment2<Key extends Comparable<Key>, Value> {
         return true;
     }
 
-    private static String[] getInputFileBySize(Integer inputSize) {
-        try {
-            Scanner in = new Scanner(new FileReader("src/lab3/theText.txt"));
-            String[] words = new String[inputSize];
-            for (int i = 0; i < inputSize; i++) {
-                if (in.hasNext()) {
-                    words[i] = in.next();
-                }
-            }
-            return words;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    public static void main(String[] args) throws FileNotFoundException {
+        System.setIn(new FileInputStream("src/lab3/theText.txt"));
 
-    public static void main(String[] args) {
-        String[] wordArray = getInputFileBySize(1000);
-        System.out.println(Arrays.toString(wordArray));
-
-
-        /*
         int distinct = 0, words = 0;
-        int minlen = Integer.parseInt(args[0]);
-        ST<String, Integer> st = new ST<String, Integer>();
+        Assignment2<String, Integer> st = new Assignment2<>();
 
         // compute frequency counts
         while (!StdIn.isEmpty()) {
             String key = StdIn.readString();
-            if (key.length() < minlen) continue;
             words++;
             if (st.contains(key)) {
                 st.put(key, st.get(key) + 1);
@@ -415,9 +396,6 @@ public class Assignment2<Key extends Comparable<Key>, Value> {
         StdOut.println(max + " " + st.get(max));
         StdOut.println("distinct = " + distinct);
         StdOut.println("words    = " + words);
-    }
-
-         */
     }
 }
 
