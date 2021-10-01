@@ -33,8 +33,8 @@ public class Assignment5 {
             }
         }
         for (String word : map.keySet()) {
-            System.out.println("Hash code is: " + ((word.hashCode() & 0x7fffffff) % 100));
-            //outputSTperformance(String.valueOf((word.hashCode() & 0x7fffffff) % 100));
+            System.out.println("Hash code is: " + ((word.hashCode() & 0x7fffffff) % 97));
+            outputSTperformance(String.valueOf((word.hashCode() & 0x7fffffff) % 97));
         }
     }
 }
