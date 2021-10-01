@@ -2,7 +2,6 @@
 package lab3;
 
 import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
 import java.io.*;
 import java.util.HashMap;
@@ -34,8 +33,8 @@ public class Assignment5 {
             }
         }
         for (String word : map.keySet()) {
-            System.out.println("Hash code is: " + word.hashCode());
-            outputSTperformance(String.valueOf(word.hashCode()));
+            System.out.println("Hash code is: " + ((word.hashCode() & 0x7fffffff) % 100));
+            //outputSTperformance(String.valueOf((word.hashCode() & 0x7fffffff) % 100));
         }
     }
 }
