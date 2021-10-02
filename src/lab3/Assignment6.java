@@ -1,18 +1,16 @@
 //README this implements princeton's SeparateChainingHashST i.e a hash table with separate chaining
+// lets the user enter a word to be matched against a key in the hashmap and frequency of entered item then
+// printed to the console
 package lab3;
 
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.SequentialSearchST;
 import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Objects;
 import java.util.Scanner;
 
-import static java.lang.System.console;
 import static java.lang.System.in;
 
 
