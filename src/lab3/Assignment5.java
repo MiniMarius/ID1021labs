@@ -26,7 +26,7 @@ public class Assignment5 {
 
         // compute frequency counts
         while (!StdIn.isEmpty()) {
-            String key = StdIn.readString();
+            String key = StdIn.readString().toLowerCase();
             if (map.containsKey(key)) {
                 map.put(key, map.get(key) + 1);
             } else {

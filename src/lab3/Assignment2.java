@@ -378,7 +378,7 @@ public class Assignment2<Key extends Comparable<Key>, Value> {
 
         // compute frequency counts
         while (!StdIn.isEmpty() && words < 1000) {
-            String key = StdIn.readString();
+            String key = StdIn.readString().toLowerCase();
             words++;
             if (st.contains(key)) {
                 st.put(key, st.get(key) + 1);

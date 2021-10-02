@@ -173,7 +173,7 @@ public class Assignment6<Key, Value> {
         Assignment6<String, Integer> st = new Assignment6<>();
 
         while (!StdIn.isEmpty()) {
-            String key = StdIn.readString();
+            String key = StdIn.readString().toLowerCase();
             if (st.contains(key)) {
                 st.put(key, st.get(key) + 1);
             } else {
