@@ -7,6 +7,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 import java.io.*;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class Assignment7<Key extends Comparable<Key>, Value> {
     private Node root;             // root of Assignment7
@@ -495,14 +496,34 @@ public class Assignment7<Key extends Comparable<Key>, Value> {
         }
     }
 
+    private void printInReverseOrder() {
+        printInReverseOrder(root);
+
+    }
+
+    private void printInReverseOrder(Node node) {
+        if (node != null) {
+            if (node.right != null) {
+                printInReverseOrder(node.right);
+            }
+            System.out.println(node.key);
+            if (node.left != null) {
+                printInReverseOrder(node.left);
+            }
+        } else {
+            System.out.println("the tree is empty!");
+        }
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
+        Scanner scanner = new Scanner(System.in);
         System.setIn(new FileInputStream("src/lab3/polishedText.txt"));
 
         int words = 0;
         Assignment7<String, Integer> st = new Assignment7<>();
 
         // compute frequency counts
-        while (!StdIn.isEmpty() && words < 2000) {
+        while (!StdIn.isEmpty() && words < 200) {
             String key = StdIn.readString().toLowerCase();
             words++;
             if (st.contains(key)) {
@@ -511,7 +532,22 @@ public class Assignment7<Key extends Comparable<Key>, Value> {
                 st.put(key, 1);
             }
         }
-        st.printInOrder();
+
+        while (true) {
+            System.out.println("normal: alphabetical order, reverse: reverse alphabetic, q: quit");
+            String input = scanner.nextLine();
+            switch (input) {
+                case ("normal"):
+                    st.printInOrder();
+                    break;
+                case ("reverse"):
+                    st.printInReverseOrder();
+                    break;
+                case ("q"):
+                    System.exit(0);
+                    break;
+            }
+        }
     }
 }
 

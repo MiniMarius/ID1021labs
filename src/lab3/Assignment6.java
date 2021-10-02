@@ -168,7 +168,7 @@ public class Assignment6<Key, Value> {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner scanner = new Scanner(in);
+        Scanner scanner = new Scanner(System.in);
         System.setIn(new FileInputStream("src/lab3/polishedText.txt"));
         Assignment6<String, Integer> st = new Assignment6<>();
 
@@ -180,11 +180,11 @@ public class Assignment6<Key, Value> {
                 st.put(key, 1);
             }
         }
-
         while (scanner.hasNext()) {
             String enteredWord = scanner.next();
             Integer frequency = st.get(enteredWord);
             System.out.println(enteredWord + " occurs " + frequency + " times");
         }
     }
+
 }
