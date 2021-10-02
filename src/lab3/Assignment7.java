@@ -476,15 +476,34 @@ public class Assignment7<Key extends Comparable<Key>, Value> {
         return true;
     }
 
+    private void printInOrder() {
+        printInOrder(root);
+
+    }
+
+    private void printInOrder(Node node) {
+        if (node != null) {
+            if (node.left != null) {
+                printInOrder(node.left);
+            }
+            System.out.println(node.key);
+            if (node.right != null) {
+                printInOrder(node.right);
+            }
+        } else {
+            System.out.println("the tree is empty!");
+        }
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
-        System.setIn(new FileInputStream("src/lab3/theText.txt"));
+        System.setIn(new FileInputStream("src/lab3/polishedText.txt"));
 
         int words = 0;
         Assignment7<String, Integer> st = new Assignment7<>();
 
         // compute frequency counts
-        while (!StdIn.isEmpty() && words < 200) {
-            String key = StdIn.readString();
+        while (!StdIn.isEmpty() && words < 2000) {
+            String key = StdIn.readString().toLowerCase();
             words++;
             if (st.contains(key)) {
                 st.put(key, st.get(key) + 1);
@@ -492,9 +511,7 @@ public class Assignment7<Key extends Comparable<Key>, Value> {
                 st.put(key, 1);
             }
         }
-        for (int i = 0; i < st.size(); i++) {
-            System.out.println(st.select(i));
-        }
+        st.printInOrder();
     }
 }
 

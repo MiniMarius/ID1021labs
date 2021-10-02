@@ -169,7 +169,7 @@ public class Assignment6<Key, Value> {
 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(in);
-        System.setIn(new FileInputStream("src/lab3/theText.txt"));
+        System.setIn(new FileInputStream("src/lab3/polishedText.txt"));
         Assignment6<String, Integer> st = new Assignment6<>();
 
         while (!StdIn.isEmpty()) {

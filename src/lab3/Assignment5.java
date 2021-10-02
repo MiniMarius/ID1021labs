@@ -21,7 +21,7 @@ public class Assignment5 {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        System.setIn(new FileInputStream("src/lab3/theText.txt"));
+        System.setIn(new FileInputStream("src/lab3/polishedText.txt"));
         Map<String, Integer> map = new HashMap<>();
 
         // compute frequency counts

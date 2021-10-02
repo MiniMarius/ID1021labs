@@ -481,7 +481,7 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        System.setIn(new FileInputStream("src/lab3/theText.txt"));
+        System.setIn(new FileInputStream("src/lab3/polishedText.txt"));
         long startTime = System.currentTimeMillis();
         int distinct = 0, words = 0;
         Assignment3<String, Integer> st = new Assignment3<>();
