@@ -1,5 +1,6 @@
 //README implements princeton's binary search symbol table and frequency counter as main method
-//Scans the first 1000 words from a txt file
+//reads the first 1000 words from a txt file, measures time of program execution and then outputs this to csv
+//file for external handling/plotting
 package lab3;
 
 import edu.princeton.cs.algs4.Queue;

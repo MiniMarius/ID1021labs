@@ -1,5 +1,5 @@
-//README this implements princeton's SeparateChainingHashST i.e a hash table with separate chaining
-// lets the user enter a word to be matched against a key in the hashmap and frequency of entered item then
+//README this implements parts of princeton's frequency counter and SeparateChainingHashST i.e a hash table with separate chaining
+// lets the user to repeatedly enter a word to be matched against a key in the hashmap and frequency of entered item
 // printed to the console
 package lab3;
 

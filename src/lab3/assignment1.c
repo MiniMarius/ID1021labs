@@ -1,5 +1,5 @@
 //README this is a simple filter that removes all characters that are not alphabetic, blank or newline.
-//using file pointers to stdin/out for external redirecting of these as you please
+//using file pointers to stdin/out for external redirecting of these.
 #include <stdio.h>
 #include <ctype.h>
 

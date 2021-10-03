@@ -1,5 +1,5 @@
 //README this program shows how evenly the hashcodes are distributed by modular hashing and output to csv file for
-//plotting in excel
+//plotting in excel. Uses parts of princeton's frequency counter code.
 package lab3;
 
 import edu.princeton.cs.algs4.StdIn;

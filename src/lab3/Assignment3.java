@@ -1,3 +1,6 @@
+//README uses the first thousand words from a txt file and measure running time of BST algorithm and outputs the
+//measured results to a csv file for plotting in external program
+//uses princeton's implementation of frequency counter and BST.
 package lab3;
 
 import edu.princeton.cs.algs4.Queue;

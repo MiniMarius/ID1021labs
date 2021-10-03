@@ -1,3 +1,6 @@
+//REACME this implements princeton's binary search tree and parts of the frequency counter. Lets the user choose to print the words from
+// a txt file in either alphabetic/reverse alphabetic order.
+// Methods use tree traversal of in-order/reverse in-order type.
 package lab3;
 
 
