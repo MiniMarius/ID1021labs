@@ -1,8 +1,0 @@
-//README this is a text explaining the differences in execution times of algorithms in assignment 3 and 4.
-
-According to my measurements of execution time between the two algorithms, symbol table was the faster one.
-Binary search tree has an average time complexity of O(log(n)) for search.
-The symbol Table has an average time complexity of O(1) for search.
-In the worst case, both BST and the symbol table has O(n) as time complexity.
-
-The time complexity of the symbol table has O(1) with high probability depending on the amount

@@ -186,5 +186,4 @@ public class Assignment6<Key, Value> {
             System.out.println(enteredWord + " occurs " + frequency + " times");
         }
     }
-
 }
