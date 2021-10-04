@@ -11,7 +11,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import static java.lang.System.in;
 
 
 public class Assignment6<Key, Value> {
@@ -180,6 +179,7 @@ public class Assignment6<Key, Value> {
                 st.put(key, 1);
             }
         }
+        System.out.println("Enter word for frequency");
         while (scanner.hasNext()) {
             String enteredWord = scanner.next();
             Integer frequency = st.get(enteredWord);
