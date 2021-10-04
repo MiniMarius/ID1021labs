@@ -153,8 +153,6 @@ public class Assignment2<Key extends Comparable<Key>, Value> {
         keys[i] = key;
         vals[i] = val;
         n++;
-
-        assert check();
     }
 
     /**
@@ -188,27 +186,6 @@ public class Assignment2<Key extends Comparable<Key>, Value> {
         // resize if 1/4 full
         if (n > 0 && n == keys.length / 4) resize(keys.length / 2);
 
-        assert check();
-    }
-
-    /**
-     * Removes the smallest key and associated value from this symbol table.
-     *
-     * @throws NoSuchElementException if the symbol table is empty
-     */
-    public void deleteMin() {
-        if (isEmpty()) throw new NoSuchElementException("Symbol table underflow error");
-        delete(min());
-    }
-
-    /**
-     * Removes the largest key and associated value from this symbol table.
-     *
-     * @throws NoSuchElementException if the symbol table is empty
-     */
-    public void deleteMax() {
-        if (isEmpty()) throw new NoSuchElementException("Symbol table underflow error");
-        delete(max());
     }
 
 
@@ -251,37 +228,6 @@ public class Assignment2<Key extends Comparable<Key>, Value> {
             throw new IllegalArgumentException("called select() with invalid argument: " + k);
         }
         return keys[k];
-    }
-
-    /**
-     * Returns the largest key in this symbol table less than or equal to {@code key}.
-     *
-     * @param key the key
-     * @return the largest key in this symbol table less than or equal to {@code key}
-     * @throws NoSuchElementException   if there is no such key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
-    public Key floor(Key key) {
-        if (key == null) throw new IllegalArgumentException("argument to floor() is null");
-        int i = rank(key);
-        if (i < n && key.compareTo(keys[i]) == 0) return keys[i];
-        if (i == 0) throw new NoSuchElementException("argument to floor() is too small");
-        else return keys[i - 1];
-    }
-
-    /**
-     * Returns the smallest key in this symbol table greater than or equal to {@code key}.
-     *
-     * @param key the key
-     * @return the smallest key in this symbol table greater than or equal to {@code key}
-     * @throws NoSuchElementException   if there is no such key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
-    public Key ceiling(Key key) {
-        if (key == null) throw new IllegalArgumentException("argument to ceiling() is null");
-        int i = rank(key);
-        if (i == n) throw new NoSuchElementException("argument to ceiling() is too large");
-        else return keys[i];
     }
 
     /**
@@ -335,31 +281,6 @@ public class Assignment2<Key extends Comparable<Key>, Value> {
             queue.enqueue(keys[i]);
         if (contains(hi)) queue.enqueue(keys[rank(hi)]);
         return queue;
-    }
-
-
-    /***************************************************************************
-     *  Check internal invariants.
-     ***************************************************************************/
-
-    private boolean check() {
-        return isSorted() && rankCheck();
-    }
-
-    // are the items in the array in ascending order?
-    private boolean isSorted() {
-        for (int i = 1; i < size(); i++)
-            if (keys[i].compareTo(keys[i - 1]) < 0) return false;
-        return true;
-    }
-
-    // check that rank(select(i)) = i
-    private boolean rankCheck() {
-        for (int i = 0; i < size(); i++)
-            if (i != rank(select(i))) return false;
-        for (int i = 0; i < size(); i++)
-            if (keys[i].compareTo(select(rank(keys[i]))) != 0) return false;
-        return true;
     }
 
     private static void outputSTperformance(Long timedPerformance) {
