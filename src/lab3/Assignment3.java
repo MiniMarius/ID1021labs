@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.NoSuchElementException;
 
 public class Assignment3<Key extends Comparable<Key>, Value> {
-    private Node root;             // root of Assignment3
+    private Node root;             // root of search tree
 
     private class Node {
         private Key key;           // sorted by key
@@ -27,22 +27,22 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Initializes an empty symbol table.
+     * Initializes binary search tree
      */
     public Assignment3() {
     }
 
     /**
-     * Returns true if this symbol table is empty.
-     * @return {@code true} if this symbol table is empty; {@code false} otherwise
+     * Returns true if this tree is empty.
+     * @return {@code true} if this tree is empty; {@code false} otherwise
      */
     public boolean isEmpty() {
         return size() == 0;
     }
 
     /**
-     * Returns the number of key-value pairs in this symbol table.
-     * @return the number of key-value pairs in this symbol table
+     * Returns the number of key-value pairs in this tree.
+     * @return the number of key-value pairs in this tree
      */
     public int size() {
         return size(root);
@@ -55,10 +55,10 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Does this symbol table contain the given key?
+     * Does this tree contain the given key?
      *
      * @param  key the key
-     * @return {@code true} if this symbol table contains {@code key} and
+     * @return {@code true} if this tree contains {@code key} and
      *         {@code false} otherwise
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
@@ -71,8 +71,8 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
      * Returns the value associated with the given key.
      *
      * @param  key the key
-     * @return the value associated with the given key if the key is in the symbol table
-     *         and {@code null} if the key is not in the symbol table
+     * @return the value associated with the given key if the key is in the tree
+     *         and {@code null} if the key is not in the tree
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
     public Value get(Key key) {
@@ -89,9 +89,9 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Inserts the specified key-value pair into the symbol table, overwriting the old
-     * value with the new value if the symbol table already contains the specified key.
-     * Deletes the specified key (and its associated value) from this symbol table
+     * Inserts the specified key-value pair into the tree, overwriting the old
+     * value with the new value if the tree already contains the specified key.
+     * Deletes the specified key (and its associated value) from this tree
      * if the specified value is {@code null}.
      *
      * @param  key the key
@@ -114,13 +114,13 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Returns the smallest key in the symbol table.
+     * Returns the smallest key in the tree.
      *
-     * @return the smallest key in the symbol table
-     * @throws NoSuchElementException if the symbol table is empty
+     * @return the smallest key in the tree
+     * @throws NoSuchElementException if the tree is empty
      */
     public Key min() {
-        if (isEmpty()) throw new NoSuchElementException("calls min() with empty symbol table");
+        if (isEmpty()) throw new NoSuchElementException("calls min() with empty tree");
         return min(root).key;
     }
 
@@ -130,13 +130,13 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Returns the largest key in the symbol table.
+     * Returns the largest key in the tree.
      *
-     * @return the largest key in the symbol table
-     * @throws NoSuchElementException if the symbol table is empty
+     * @return the largest key in the tree
+     * @throws NoSuchElementException if the tree is empty
      */
     public Key max() {
-        if (isEmpty()) throw new NoSuchElementException("calls max() with empty symbol table");
+        if (isEmpty()) throw new NoSuchElementException("calls max() with empty tree");
         return max(root).key;
     }
 
@@ -146,13 +146,13 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Return the key in the symbol table of a given {@code rank}.
+     * Return the key in the tree of a given {@code rank}.
      * This key has the property that there are {@code rank} keys in
-     * the symbol table that are smaller. In other words, this key is the
-     * ({@code rank}+1)st smallest key in the symbol table.
+     * the tree that are smaller. In other words, this key is the
+     * ({@code rank}+1)st smallest key in the tree.
      *
      * @param  rank the order statistic
-     * @return the key in the symbol table of given {@code rank}
+     * @return the key in the tree of given {@code rank}
      * @throws IllegalArgumentException unless {@code rank} is between 0 and
      *        <em>n</em>–1
      */
@@ -174,10 +174,10 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Return the number of keys in the symbol table strictly less than {@code key}.
+     * Return the number of keys in the tree strictly less than {@code key}.
      *
      * @param  key the key
-     * @return the number of keys in the symbol table strictly less than {@code key}
+     * @return the number of keys in the tree strictly less than {@code key}
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
     public int rank(Key key) {
@@ -195,11 +195,11 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Returns all keys in the symbol table as an {@code Iterable}.
-     * To iterate over all of the keys in the symbol table named {@code st},
+     * Returns all keys in the tree as an {@code Iterable}.
+     * To iterate over all of the keys in the tree named {@code st},
      * use the foreach notation: {@code for (Key key : st.keys())}.
      *
-     * @return all keys in the symbol table
+     * @return all keys in the tree
      */
     public Iterable<Key> keys() {
         if (isEmpty()) return new Queue<Key>();
@@ -207,12 +207,12 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * Returns all keys in the symbol table in the given range,
+     * Returns all keys in the tree in the given range,
      * as an {@code Iterable}.
      *
      * @param  lo minimum endpoint
      * @param  hi maximum endpoint
-     * @return all keys in the symbol table between {@code lo}
+     * @return all keys in the tree between {@code lo}
      *         (inclusive) and {@code hi} (inclusive)
      * @throws IllegalArgumentException if either {@code lo} or {@code hi}
      *         is {@code null}
@@ -235,6 +235,10 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
         if (cmphi > 0) keys(x.right, queue, lo, hi);
     }
 
+    /**
+     * Appends a Long integer to a3performance csv file
+     * @param timedPerformance the Long integer to be appended
+     */
     private static void outputSTperformance(Long timedPerformance) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("a3performance" + ".csv", true))) {
             writer.write(String.valueOf(timedPerformance + ';'));
