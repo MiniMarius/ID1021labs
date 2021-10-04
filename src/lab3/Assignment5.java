@@ -33,6 +33,8 @@ public class Assignment5 {
                 map.put(key, 1);
             }
         }
+        // This code masks off the sign bit to turn the 32-bit number into a 31-bit nonnegative
+        //integer. Disperses the keys between 0 and 96
         for (String word : map.keySet()) {
             System.out.println("Hash code is: " + ((word.hashCode() & 0x7fffffff) % 97));
             outputSTperformance(String.valueOf((word.hashCode() & 0x7fffffff) % 97));
