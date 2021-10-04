@@ -101,7 +101,6 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     public void put(Key key, Value val) {
         if (key == null) throw new IllegalArgumentException("calls put() with a null key");
         root = put(root, key, val);
-        assert check();
     }
 
     private Node put(Node x, Key key, Value val) {
@@ -144,68 +143,6 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     private Node max(Node x) {
         if (x.right == null) return x;
         else                 return max(x.right);
-    }
-
-    /**
-     * Returns the largest key in the symbol table less than or equal to {@code key}.
-     *
-     * @param  key the key
-     * @return the largest key in the symbol table less than or equal to {@code key}
-     * @throws NoSuchElementException if there is no such key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
-    public Key floor(Key key) {
-        if (key == null) throw new IllegalArgumentException("argument to floor() is null");
-        if (isEmpty()) throw new NoSuchElementException("calls floor() with empty symbol table");
-        Node x = floor(root, key);
-        if (x == null) throw new NoSuchElementException("argument to floor() is too small");
-        else return x.key;
-    }
-
-    private Node floor(Node x, Key key) {
-        if (x == null) return null;
-        int cmp = key.compareTo(x.key);
-        if (cmp == 0) return x;
-        if (cmp <  0) return floor(x.left, key);
-        Node t = floor(x.right, key);
-        if (t != null) return t;
-        else return x;
-    }
-
-    private Key floor2(Node x, Key key, Key best) {
-        if (x == null) return best;
-        int cmp = key.compareTo(x.key);
-        if      (cmp  < 0) return floor2(x.left, key, best);
-        else if (cmp  > 0) return floor2(x.right, key, x.key);
-        else               return x.key;
-    }
-
-    /**
-     * Returns the smallest key in the symbol table greater than or equal to {@code key}.
-     *
-     * @param  key the key
-     * @return the smallest key in the symbol table greater than or equal to {@code key}
-     * @throws NoSuchElementException if there is no such key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
-    public Key ceiling(Key key) {
-        if (key == null) throw new IllegalArgumentException("argument to ceiling() is null");
-        if (isEmpty()) throw new NoSuchElementException("calls ceiling() with empty symbol table");
-        Node x = ceiling(root, key);
-        if (x == null) throw new NoSuchElementException("argument to floor() is too large");
-        else return x.key;
-    }
-
-    private Node ceiling(Node x, Key key) {
-        if (x == null) return null;
-        int cmp = key.compareTo(x.key);
-        if (cmp == 0) return x;
-        if (cmp < 0) {
-            Node t = ceiling(x.left, key);
-            if (t != null) return t;
-            else return x;
-        }
-        return ceiling(x.right, key);
     }
 
     /**
@@ -297,83 +234,6 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
         if (cmplo <= 0 && cmphi >= 0) queue.enqueue(x.key);
         if (cmphi > 0) keys(x.right, queue, lo, hi);
     }
-
-    /**
-     * Returns the number of keys in the symbol table in the given range.
-     *
-     * @param  lo minimum endpoint
-     * @param  hi maximum endpoint
-     * @return the number of keys in the symbol table between {@code lo}
-     *         (inclusive) and {@code hi} (inclusive)
-     * @throws IllegalArgumentException if either {@code lo} or {@code hi}
-     *         is {@code null}
-     */
-    public int size(Key lo, Key hi) {
-        if (lo == null) throw new IllegalArgumentException("first argument to size() is null");
-        if (hi == null) throw new IllegalArgumentException("second argument to size() is null");
-
-        if (lo.compareTo(hi) > 0) return 0;
-        if (contains(hi)) return rank(hi) - rank(lo) + 1;
-        else              return rank(hi) - rank(lo);
-    }
-
-    /**
-     * Returns the height of the Assignment3 (for debugging).
-     *
-     * @return the height of the Assignment3 (a 1-node tree has height 0)
-     */
-    public int height() {
-        return height(root);
-    }
-    private int height(Node x) {
-        if (x == null) return -1;
-        return 1 + Math.max(height(x.left), height(x.right));
-    }
-
-    /*************************************************************************
-     *  Check integrity of Assignment3 data structure.
-     ***************************************************************************/
-    private boolean check() {
-        if (!isBST())            StdOut.println("Not in symmetric order");
-        if (!isSizeConsistent()) StdOut.println("Subtree counts not consistent");
-        if (!isRankConsistent()) StdOut.println("Ranks not consistent");
-        return isBST() && isSizeConsistent() && isRankConsistent();
-    }
-
-    // does this binary tree satisfy symmetric order?
-    // Note: this test also ensures that data structure is a binary tree since order is strict
-    private boolean isBST() {
-        return isBST(root, null, null);
-    }
-
-    // is the tree rooted at x a Assignment3 with all keys strictly between min and max
-    // (if min or max is null, treat as empty constraint)
-    // Credit: Bob Dondero's elegant solution
-    private boolean isBST(Node x, Key min, Key max) {
-        if (x == null) return true;
-        if (min != null && x.key.compareTo(min) <= 0) return false;
-        if (max != null && x.key.compareTo(max) >= 0) return false;
-        return isBST(x.left, min, x.key) && isBST(x.right, x.key, max);
-    }
-
-    // are the size fields correct?
-    private boolean isSizeConsistent() { return isSizeConsistent(root); }
-    private boolean isSizeConsistent(Node x) {
-        if (x == null) return true;
-        if (x.size != size(x.left) + size(x.right) + 1) return false;
-        return isSizeConsistent(x.left) && isSizeConsistent(x.right);
-    }
-
-    // check that ranks are consistent
-    private boolean isRankConsistent() {
-        for (int i = 0; i < size(); i++)
-            if (i != rank(select(i))) return false;
-        for (Key key : keys())
-            if (key.compareTo(select(rank(key))) != 0) return false;
-        return true;
-    }
-
-
 
     private static void outputSTperformance(Long timedPerformance) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("a3performance" + ".csv", true))) {
