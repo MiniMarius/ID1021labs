@@ -100,10 +100,6 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
      */
     public void put(Key key, Value val) {
         if (key == null) throw new IllegalArgumentException("calls put() with a null key");
-        if (val == null) {
-            delete(key);
-            return;
-        }
         root = put(root, key, val);
         assert check();
     }
@@ -117,75 +113,6 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
         x.size = 1 + size(x.left) + size(x.right);
         return x;
     }
-
-
-    /**
-     * Removes the smallest key and associated value from the symbol table.
-     *
-     * @throws NoSuchElementException if the symbol table is empty
-     */
-    public void deleteMin() {
-        if (isEmpty()) throw new NoSuchElementException("Symbol table underflow");
-        root = deleteMin(root);
-        assert check();
-    }
-
-    private Node deleteMin(Node x) {
-        if (x.left == null) return x.right;
-        x.left = deleteMin(x.left);
-        x.size = size(x.left) + size(x.right) + 1;
-        return x;
-    }
-
-    /**
-     * Removes the largest key and associated value from the symbol table.
-     *
-     * @throws NoSuchElementException if the symbol table is empty
-     */
-    public void deleteMax() {
-        if (isEmpty()) throw new NoSuchElementException("Symbol table underflow");
-        root = deleteMax(root);
-        assert check();
-    }
-
-    private Node deleteMax(Node x) {
-        if (x.right == null) return x.left;
-        x.right = deleteMax(x.right);
-        x.size = size(x.left) + size(x.right) + 1;
-        return x;
-    }
-
-    /**
-     * Removes the specified key and its associated value from this symbol table
-     * (if the key is in this symbol table).
-     *
-     * @param  key the key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
-    public void delete(Key key) {
-        if (key == null) throw new IllegalArgumentException("calls delete() with a null key");
-        root = delete(root, key);
-        assert check();
-    }
-
-    private Node delete(Node x, Key key) {
-        if (x == null) return null;
-
-        int cmp = key.compareTo(x.key);
-        if      (cmp < 0) x.left  = delete(x.left,  key);
-        else if (cmp > 0) x.right = delete(x.right, key);
-        else {
-            if (x.right == null) return x.left;
-            if (x.left  == null) return x.right;
-            Node t = x;
-            x = min(t.right);
-            x.right = deleteMin(t.right);
-            x.left = t.left;
-        }
-        x.size = size(x.left) + size(x.right) + 1;
-        return x;
-    }
-
 
     /**
      * Returns the smallest key in the symbol table.
@@ -243,13 +170,6 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
         Node t = floor(x.right, key);
         if (t != null) return t;
         else return x;
-    }
-
-    public Key floor2(Key key) {
-        Key x = floor2(root, key, null);
-        if (x == null) throw new NoSuchElementException("argument to floor() is too small");
-        else return x;
-
     }
 
     private Key floor2(Node x, Key key, Key best) {
@@ -408,25 +328,6 @@ public class Assignment3<Key extends Comparable<Key>, Value> {
     private int height(Node x) {
         if (x == null) return -1;
         return 1 + Math.max(height(x.left), height(x.right));
-    }
-
-    /**
-     * Returns the keys in the Assignment3 in level order (for debugging).
-     *
-     * @return the keys in the Assignment3 in level order traversal
-     */
-    public Iterable<Key> levelOrder() {
-        Queue<Key> keys = new Queue<Key>();
-        Queue<Node> queue = new Queue<Node>();
-        queue.enqueue(root);
-        while (!queue.isEmpty()) {
-            Node x = queue.dequeue();
-            if (x == null) continue;
-            keys.enqueue(x.key);
-            queue.enqueue(x.left);
-            queue.enqueue(x.right);
-        }
-        return keys;
     }
 
     /*************************************************************************
