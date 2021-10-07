@@ -3,6 +3,8 @@ package lab4;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.ST;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class SymbolGraph {
@@ -10,11 +12,10 @@ public class SymbolGraph {
     private String[] keys;           // index  -> string
     private GraphClass graph;             // the underlying graph
 
-    public SymbolGraph(String filename, String delimiter) {
+    public SymbolGraph(String filename, String delimiter) throws FileNotFoundException {
         st = new ST<String, Integer>();
-
-        Scanner in = new Scanner(filename);
-        while (!in.hasNext()) {
+        Scanner in = new Scanner(new FileReader("src/lab4/" + filename));
+        while (in.hasNext()) {
             String[] a = in.nextLine().split(delimiter);
             for (int i = 0; i < a.length; i++) {
                 if (!st.contains(a[i]))
@@ -29,10 +30,10 @@ public class SymbolGraph {
 
         graph = new GraphClass(st.size());
         in = new Scanner(filename);
-        while (in.hasNextLine()) {
-            String[] a = in.next().split(delimiter);
+        while (in.hasNext()) {
+            String[] a = in.nextLine().split(delimiter);
             int v = st.get(a[0]);
-            for (int i = 1; i < a.length; i++) {
+            for (int i = 0; i < a.length; i++) {
                 int w = st.get(a[i]);
                 graph.addEdge(v, w);
             }
