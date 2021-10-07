@@ -8,14 +8,24 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 public class SymbolGraph {
+<<<<<<< HEAD
     private ST<String, Integer> st;
     private String[] keys;
     private GraphClass graph;
+=======
+    private ST<String, Integer> st;  // string -> index
+    private String[] keys;           // index  -> string
+    private GraphClass graph;             // the underlying graph
+>>>>>>> ab52166280d23098e9e3ba69e4008d9ce7536ada
 
     public SymbolGraph(String filename, String delimiter) throws FileNotFoundException {
         st = new ST<String, Integer>();
         Scanner in = new Scanner(new FileReader("src/lab4/" + filename));
+<<<<<<< HEAD
         while (in.hasNextLine()) {
+=======
+        while (in.hasNext()) {
+>>>>>>> ab52166280d23098e9e3ba69e4008d9ce7536ada
             String[] a = in.nextLine().split(delimiter);
             for (int i = 0; i < a.length; i++) {
                 if (!st.contains(a[i]))
@@ -29,8 +39,13 @@ public class SymbolGraph {
         }
 
         graph = new GraphClass(st.size());
+<<<<<<< HEAD
         in = new Scanner(new FileReader("src/lab4/" + filename));
         while (in.hasNextLine()) {
+=======
+        in = new Scanner(filename);
+        while (in.hasNext()) {
+>>>>>>> ab52166280d23098e9e3ba69e4008d9ce7536ada
             String[] a = in.nextLine().split(delimiter);
             int v = st.get(a[0]);
             for (int i = 0; i < a.length; i++) {
@@ -48,11 +63,30 @@ public class SymbolGraph {
         return st.get(s);
     }
 
+<<<<<<< HEAD
+=======
+    public int indexOf(String s) {
+        return st.get(s);
+    }
+
+>>>>>>> ab52166280d23098e9e3ba69e4008d9ce7536ada
     public String name(int v) {
         validateVertex(v);
         return keys[v];
     }
 
+<<<<<<< HEAD
+=======
+    public String nameOf(int v) {
+        validateVertex(v);
+        return keys[v];
+    }
+
+    public GraphClass G() {
+        return graph;
+    }
+
+>>>>>>> ab52166280d23098e9e3ba69e4008d9ce7536ada
     public GraphClass graph() {
         return graph;
     }
