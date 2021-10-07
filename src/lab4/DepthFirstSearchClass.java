@@ -46,13 +46,13 @@ public class DepthFirstSearchClass {
             throw new IllegalArgumentException("invalid input format in Graph constructor", e);
         }
     }
-    //deep copies the Graph parameter
+    //deep copies the graph
     public DepthFirstSearchClass(GraphClass G) {
         this.V = G.V();
         this.E = G.E();
         if (V < 0) throw new IllegalArgumentException("Number of vertices must be non-negative");
 
-        // update adjacency lists
+
         adj = (Bag<Integer>[]) new Bag[V];
         for (int v = 0; v < V; v++) {
             adj[v] = new Bag<Integer>();
