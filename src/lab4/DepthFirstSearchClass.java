@@ -1,83 +1,55 @@
 package lab4;
 
-import edu.princeton.cs.algs4.Bag;
-import edu.princeton.cs.algs4.Stack;
-
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
 public class DepthFirstSearchClass {
-    private static final String NEWLINE = System.getProperty("line.separator");
+    private boolean[] marked;    // marked[v] = is there an s-v path?
+    private int count;           // number of vertices connected to s
 
-    private final int V;
-    private int E;
-    private Bag<Integer>[] adj;
-
-    public DepthFirstSearchClass(int V) {
-        if (V < 0) throw new IllegalArgumentException("Number of vertices must be non-negative");
-        this.V = V;
-        this.E = 0;
-        adj = (Bag<Integer>[]) new Bag[V];
-        for (int v = 0; v < V; v++) {
-            adj[v] = new Bag<Integer>();
-        }
+    /**
+     * Computes the vertices in graph {@code G} that are
+     * connected to the source vertex {@code s}.
+     * @param G the graph
+     * @param s the source vertex
+     * @throws IllegalArgumentException unless {@code 0 <= s < V}
+     */
+    public DepthFirstSearchClass(GraphClass G, int s) {
+        marked = new boolean[G.V()];
+        validateVertex(s);
+        dfs(G, s);
     }
 
-    public DepthFirstSearchClass(Scanner in) {
-        if (in == null) throw new IllegalArgumentException("argument is null");
-        try {
-            this.V = in.nextInt();
-            if (V < 0) throw new IllegalArgumentException("number of vertices in a Graph must be non-negative");
-            adj = (Bag<Integer>[]) new Bag[V];
-            for (int v = 0; v < V; v++) {
-                adj[v] = new Bag<Integer>();
-            }
-            int E = in.nextInt();
-            if (E < 0) throw new IllegalArgumentException("number of edges in a Graph must be non-negative");
-            for (int i = 0; i < E; i++) {
-                int v = in.nextInt();
-                int w = in.nextInt();
-                validateVertex(v);
-                validateVertex(w);
-                addEdge(v, w);
-            }
-        }
-        catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("invalid input format in Graph constructor", e);
-        }
-    }
-    //deep copies the graph
-    public DepthFirstSearchClass(GraphClass G) {
-        this.V = G.V();
-        this.E = G.E();
-        if (V < 0) throw new IllegalArgumentException("Number of vertices must be non-negative");
-
-
-        adj = (Bag<Integer>[]) new Bag[V];
-        for (int v = 0; v < V; v++) {
-            adj[v] = new Bag<Integer>();
-        }
-
-        for (int v = 0; v < G.V(); v++) {
-            // reverse so that adjacency list is in same order as original
-            Stack<Integer> reverse = new Stack<Integer>();
-            for (int w : G.getAdj()[v]) {
-                reverse.push(w);
-            }
-            for (int w : reverse) {
-                adj[v].add(w);
+    // depth first search from v
+    private void dfs(GraphClass G, int v) {
+        count++;
+        marked[v] = true;
+        for (int w : G.adj(v)) {
+            if (!marked[w]) {
+                dfs(G, w);
             }
         }
     }
 
-    public void addEdge(int v, int w) {
+    /**
+     * Is there a path between the source vertex {@code s} and vertex {@code v}?
+     * @param v the vertex
+     * @return {@code true} if there is a path, {@code false} otherwise
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public boolean marked(int v) {
         validateVertex(v);
-        validateVertex(w);
-        E++;
-        adj[v].add(w);
-        adj[w].add(v);
+        return marked[v];
     }
+
+    /**
+     * Returns the number of vertices connected to the source vertex {@code s}.
+     * @return the number of vertices connected to the source vertex {@code s}
+     */
+    public int count() {
+        return count;
+    }
+
+    // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
+        int V = marked.length;
         if (v < 0 || v >= V)
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
     }
