@@ -47,22 +47,9 @@ public class SymbolGraph {
         return st.get(s);
     }
 
-    public int indexOf(String s) {
-        return st.get(s);
-    }
-
     public String name(int v) {
         validateVertex(v);
         return keys[v];
-    }
-
-    public String nameOf(int v) {
-        validateVertex(v);
-        return keys[v];
-    }
-
-    public GraphClass G() {
-        return graph;
     }
 
     public GraphClass graph() {
