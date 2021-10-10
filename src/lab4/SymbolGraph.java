@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
+/**
+ * adds a string symbol key to the indexes of graph
+ */
 public class SymbolGraph {
     private ST<String, Integer> st;
     private String[] keys;

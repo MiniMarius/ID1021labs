@@ -8,11 +8,10 @@ public class Assignment1 {
     public static void main(String[] args) {
         try {
             SymbolGraph sg = new SymbolGraph("usa.txt", " ");
-            DepthFirstSearchClass df = new DepthFirstSearchClass(sg.graph(), 0);
-            for (int v = 0; v < sg.graph().V(); v++) {
-                if (df.marked(v))
-                    System.out.println(sg.name(v) + " ");
-            }
+            String place = "FL";
+            //DepthFirstSearchClass df = new DepthFirstSearchClass(sg.graph(), sg.index(place));
+            for (int w : sg.graph().adj(sg.index(place)))
+                System.out.println(("   " + sg.name(w)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

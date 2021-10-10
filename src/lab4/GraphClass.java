@@ -7,11 +7,14 @@ import edu.princeton.cs.algs4.Stack;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * class that contains vertices and edges and manipulation of these
+ */
 public class GraphClass {
 
     private final int V;
     private int E;
-    private Bag<Integer>[] adj;
+    private Bag<Integer>[] adj; //linked lists of adjacent vertices
 
     public GraphClass(int V) {
         if (V < 0) throw new IllegalArgumentException("Number of vertices must be non-negative");
@@ -44,8 +47,6 @@ public class GraphClass {
         adj[v].add(w);
         adj[w].add(v);
     }
-
-
 
     public Iterable<Integer> adj(int v) {
         validateVertex(v);
