@@ -2,22 +2,25 @@ package lab4;
 
 
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Assignment1 {
-
     public static void main(String[] args) {
         try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("starting location: ");
+            String place = scanner.next();
+            System.out.println("destination: ");
+            String destination = scanner.next();
             SymbolGraph sg = new SymbolGraph("usa.txt", " ");
-            String place = "TN";
             DepthFirstSearchClass search = new DepthFirstSearchClass(sg.graph(), sg.index(place));
-            for (int v = 0; v < sg.graph().V(); v++) {
-                System.out.println((place + " to " + sg.name(v) + ": "));
-                if (search.hasPathTo(v))
-                    for (int x : search.pathTo(v))
-                        if (x == sg.index(place)) System.out.print(x);
-                        else System.out.print("-" + x);
-                System.out.println();
-            }
+
+            System.out.println((place + " to " + sg.name(sg.index(destination)) + ": "));
+            if (search.hasPathTo(sg.index(destination)))
+                for (int x : search.pathTo(sg.index(destination)))
+                    if (x == sg.index(place)) System.out.print(sg.name(x));
+                    else System.out.print("-" + sg.name(x));
+            System.out.println();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
