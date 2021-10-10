@@ -8,7 +8,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class GraphClass {
-    private static final String NEWLINE = System.getProperty("line.separator");
 
     private final int V;
     private int E;
@@ -106,13 +105,13 @@ public class GraphClass {
 
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append(V + " vertices, " + E + " edges " + NEWLINE);
+        s.append(V + " vertices, " + E + " edges " + "\n");
         for (int v = 0; v < V; v++) {
             s.append(v + ": ");
             for (int w : adj[v]) {
                 s.append(w + " ");
             }
-            s.append(NEWLINE);
+            s.append("\n");
         }
         return s.toString();
     }
