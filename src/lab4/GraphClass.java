@@ -23,53 +23,6 @@ public class GraphClass {
         }
     }
 
-    public GraphClass(Scanner in) {
-        if (in == null) throw new IllegalArgumentException("argument is null");
-        try {
-            this.V = in.nextInt();
-            if (V < 0) throw new IllegalArgumentException("number of vertices in a GraphClass must be non-negative");
-            adj = (Bag<Integer>[]) new Bag[V];
-            for (int v = 0; v < V; v++) {
-                adj[v] = new Bag<Integer>();
-            }
-            int E = in.nextInt();
-            if (E < 0) throw new IllegalArgumentException("number of edges in a GraphClass must be non-negative");
-            for (int i = 0; i < E; i++) {
-                int v = in.nextInt();
-                int w = in.nextInt();
-                validateVertex(v);
-                validateVertex(w);
-                addEdge(v, w);
-            }
-        }
-        catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("invalid input format in GraphClass constructor", e);
-        }
-    }
-
-    public GraphClass(GraphClass G) {
-        this.V = G.V();
-        this.E = G.E();
-        if (V < 0) throw new IllegalArgumentException("Number of vertices must be non-negative");
-
-        // update adjacency lists
-        adj = (Bag<Integer>[]) new Bag[V];
-        for (int v = 0; v < V; v++) {
-            adj[v] = new Bag<Integer>();
-        }
-
-        for (int v = 0; v < G.V(); v++) {
-            // reverse so that adjacency list is in same order as original
-            Stack<Integer> reverse = new Stack<Integer>();
-            for (int w : G.adj[v]) {
-                reverse.push(w);
-            }
-            for (int w : reverse) {
-                adj[v].add(w);
-            }
-        }
-    }
-
     public int V() {
         return V;
     }
