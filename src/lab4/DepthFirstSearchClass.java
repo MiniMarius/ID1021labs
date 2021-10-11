@@ -7,6 +7,7 @@ public class DepthFirstSearchClass {
     private int[] edgeTo;
     private final int s;
 
+    //constructor for undirected graph
     public DepthFirstSearchClass(GraphClass G, int s) {
         this.s = s;
         edgeTo = new int[G.V()];
@@ -14,14 +15,33 @@ public class DepthFirstSearchClass {
         validateVertex(s);
         dfs(G, s);
     }
+    //constructor for Directed graph
+    public DepthFirstSearchClass(DirectedGraph G, int s) {
+        marked = new boolean[G.V()];
+        edgeTo = new int[G.V()];
+        this.s = s;
+        validateVertex(s);
+        DirectedDfs(G, s);
+    }
 
-    // depth first search from v
+    // depth first search from v for undirected graph
     private void dfs(GraphClass G, int v) {
         marked[v] = true;
         for (int w : G.adj(v)) {
             if (!marked[w]) {
                 edgeTo[w] = v;
                 dfs(G, w);
+            }
+        }
+    }
+
+    // depth first search from v for a directed graph
+    private void DirectedDfs(DirectedGraph G, int v) {
+        marked[v] = true;
+        for (int w : G.adj(v)) {
+            if (!marked[w]) {
+                edgeTo[w] = v;
+                DirectedDfs(G, w);
             }
         }
     }
