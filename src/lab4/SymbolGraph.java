@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class SymbolGraph {
     private ST<String, Integer> st;
     private String[] keys;
-    private GraphClass graph;
+    private Graph graph;
 
     public SymbolGraph(String filename, String delimiter) throws FileNotFoundException {
         st = new ST<String, Integer>();
@@ -30,7 +30,7 @@ public class SymbolGraph {
             keys[st.get(name)] = name;
         }
 
-        graph = new GraphClass(st.size());
+        graph = new Graph(st.size());
         in = new Scanner(new FileReader("src/lab4/" + filename));
         while (in.hasNextLine()) {
             String[] a = in.nextLine().split(delimiter);
@@ -55,7 +55,7 @@ public class SymbolGraph {
         return keys[v];
     }
 
-    public GraphClass graph() {
+    public Graph graph() {
         return graph;
     }
 

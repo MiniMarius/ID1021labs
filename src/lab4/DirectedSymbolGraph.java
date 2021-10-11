@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class DirectedSymbolGraph {
     private ST<String, Integer> st;  // string -> index
     private String[] keys;           // index  -> string
-    private DirectedGraph graph;           // the underlying digraph
+    private DirectedGraph graph;     // the underlying digraph
 
     public DirectedSymbolGraph(String filename, String delimiter) throws FileNotFoundException {
         st = new ST<String, Integer>();

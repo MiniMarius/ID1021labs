@@ -12,7 +12,7 @@ public class Assignment1 {
             System.out.println("destination: ");
             String destination = scanner.next();
             SymbolGraph sg = new SymbolGraph("usa.txt", " ");
-            DepthFirstSearchClass search = new DepthFirstSearchClass(sg.graph(), sg.index(place));
+            DepthFirstSearch search = new DepthFirstSearch(sg.graph(), sg.index(place));
 
             System.out.println((place + " to " + sg.name(sg.index(destination)) + ": "));
             if (search.hasPathTo(sg.index(destination)))

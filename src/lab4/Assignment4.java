@@ -12,7 +12,7 @@ public class Assignment4 {
             System.out.println("destination: ");
             String destination = scanner.next();
             DirectedSymbolGraph sg = new DirectedSymbolGraph("usa.txt", " ");
-            DepthFirstSearchClass search = new DepthFirstSearchClass(sg.digraph(), sg.index(place));
+            DepthFirstSearch search = new DepthFirstSearch(sg.digraph(), sg.index(place));
 
             System.out.println((place + " to " + sg.name(sg.index(destination)) + ": "));
             if (search.hasPathTo(sg.index(destination)))

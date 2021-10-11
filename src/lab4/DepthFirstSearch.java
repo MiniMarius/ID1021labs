@@ -2,13 +2,13 @@ package lab4;
 
 import edu.princeton.cs.algs4.Stack;
 
-public class DepthFirstSearchClass {
+public class DepthFirstSearch {
     private boolean[] marked;
     private int[] edgeTo;
     private final int s;
 
     //constructor for undirected graph
-    public DepthFirstSearchClass(GraphClass G, int s) {
+    public DepthFirstSearch(Graph G, int s) {
         this.s = s;
         edgeTo = new int[G.V()];
         marked = new boolean[G.V()];
@@ -16,7 +16,7 @@ public class DepthFirstSearchClass {
         dfs(G, s);
     }
     //constructor for Directed graph
-    public DepthFirstSearchClass(DirectedGraph G, int s) {
+    public DepthFirstSearch(DirectedGraph G, int s) {
         marked = new boolean[G.V()];
         edgeTo = new int[G.V()];
         this.s = s;
@@ -25,7 +25,7 @@ public class DepthFirstSearchClass {
     }
 
     // depth first search from v for undirected graph
-    private void dfs(GraphClass G, int v) {
+    private void dfs(Graph G, int v) {
         marked[v] = true;
         for (int w : G.adj(v)) {
             if (!marked[w]) {

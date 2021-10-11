@@ -10,13 +10,13 @@ import java.util.Scanner;
 /**
  * class that contains vertices and edges and manipulation of these
  */
-public class GraphClass {
+public class Graph {
 
     private final int V;
     private int E;
     private Bag<Integer>[] adj; //linked lists of adjacent vertices
 
-    public GraphClass(int V) {
+    public Graph(int V) {
         if (V < 0) throw new IllegalArgumentException("Number of vertices must be non-negative");
         this.V = V;
         this.E = 0;
@@ -47,6 +47,8 @@ public class GraphClass {
         adj[v].add(w);
         adj[w].add(v);
     }
+
+
 
     public Iterable<Integer> adj(int v) {
         validateVertex(v);
