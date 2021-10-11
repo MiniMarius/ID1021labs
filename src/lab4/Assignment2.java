@@ -3,7 +3,7 @@ package lab4;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Assignment1 {
+public class Assignment2 {
     public static void main(String[] args) {
         try {
             Scanner scanner = new Scanner(System.in);
@@ -12,7 +12,7 @@ public class Assignment1 {
             System.out.println("destination: ");
             String destination = scanner.next();
             SymbolGraph sg = new SymbolGraph("usa.txt", " ");
-            DepthFirstSearchClass search = new DepthFirstSearchClass(sg.graph(), sg.index(place));
+            BreadthFirstClass search = new BreadthFirstClass(sg.graph(), sg.index(place));
 
             System.out.println((place + " to " + sg.name(sg.index(destination)) + ": "));
             if (search.hasPathTo(sg.index(destination)))

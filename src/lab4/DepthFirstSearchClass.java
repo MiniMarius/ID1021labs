@@ -3,9 +3,9 @@ package lab4;
 import edu.princeton.cs.algs4.Stack;
 
 public class DepthFirstSearchClass {
-    private boolean[] marked;    // marked[v] = is there an s-v path?
-    private int[] edgeTo;        // edgeTo[v] = last edge on s-v path
-    private final int s;         // source vertex
+    private boolean[] marked;
+    private int[] edgeTo;
+    private final int s;
 
     public DepthFirstSearchClass(GraphClass G, int s) {
         this.s = s;
@@ -46,7 +46,6 @@ public class DepthFirstSearchClass {
         return path;
     }
 
-    // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = marked.length;
         if (v < 0 || v >= V)
