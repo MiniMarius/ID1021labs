@@ -16,7 +16,7 @@ public class BreadthFirstClass {
         bfs(G, s);
     }
 
-    // breadth-first search from a single source
+    // breadth-first search from a source s
     private void bfs(GraphClass G, int s) {
         Queue<Integer> q = new Queue<Integer>();
         marked[s] = true;
@@ -38,14 +38,18 @@ public class BreadthFirstClass {
         return marked[v];
     }
 
+    /**
+     * Returns a path between the source vertex and vertex v
+     *
+     * @param v the vertex to find a path to
+     */
     public Iterable<Integer> pathTo(int v) {
         validateVertex(v);
         if (!hasPathTo(v)) return null;
         Stack<Integer> path = new Stack<Integer>();
-        int x;
-        for (x = v; x != s; x = edgeTo[x])
+        for (int x = v; x != s; x = edgeTo[x])
             path.push(x);
-        path.push(x);
+        path.push(s);
         return path;
     }
 
