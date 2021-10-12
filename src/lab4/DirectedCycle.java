@@ -3,13 +3,13 @@ package lab4;
 import edu.princeton.cs.algs4.Stack;
 
 public class DirectedCycle {
-    private boolean[] marked;        // has vertex v been marked?
+    private boolean[] marked;
     private int[] edgeTo;
     private boolean[] onStack;
-    private Stack<Integer> cycle;    // directed cycle (or null if no such cycle)
+    private Stack<Integer> cycle;
 
     /**
-     * Determines whether the digraph has a directed cycle
+     * Checks if digraph has a directed cycle
      */
     public DirectedCycle(DirectedGraph G, int v) {
         marked = new boolean[G.V()];
@@ -18,22 +18,20 @@ public class DirectedCycle {
         if (!marked[v]) dfs(G, v);
     }
 
-    // run DFS and find a directed cycle (if one exists)
+    // run DFS to find a directed cycle
     private void dfs(DirectedGraph G, int v) {
         onStack[v] = true;
         marked[v] = true;
         for (int w : G.adj(v)) {
 
-            // short circuit if directed cycle found
+
             if (cycle != null) return;
 
-                // found new vertex, so recur
             else if (!marked[w]) {
                 edgeTo[w] = v;
                 dfs(G, w);
             }
 
-            // trace back directed cycle
             else if (onStack[w]) {
                 cycle = new Stack<Integer>();
                 for (int x = v; x != w; x = edgeTo[x]) {

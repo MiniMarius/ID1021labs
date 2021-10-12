@@ -53,7 +53,6 @@ public class BreadthFirst {
         return path;
     }
 
-    // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = marked.length;
         if (v < 0 || v >= V)
