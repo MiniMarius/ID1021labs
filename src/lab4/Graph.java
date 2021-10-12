@@ -1,11 +1,6 @@
 package lab4;
 
 import edu.princeton.cs.algs4.Bag;
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Stack;
-
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 /**
  * class that contains vertices and edges and manipulation of these
@@ -48,15 +43,9 @@ public class Graph {
         adj[w].add(v);
     }
 
-
-
     public Iterable<Integer> adj(int v) {
         validateVertex(v);
         return adj[v];
-    }
-    public int degree(int v) {
-        validateVertex(v);
-        return adj[v].size();
     }
 
     public String toString() {
@@ -70,9 +59,5 @@ public class Graph {
             s.append("\n");
         }
         return s.toString();
-    }
-
-    public Bag<Integer>[] getAdj() {
-        return adj;
     }
 }
