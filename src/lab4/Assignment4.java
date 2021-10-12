@@ -15,11 +15,12 @@ public class Assignment4 {
             DepthFirstSearch search = new DepthFirstSearch(sg.digraph(), sg.index(place));
 
             System.out.println((place + " to " + sg.name(sg.index(destination)) + ": "));
-            if (search.hasPathTo(sg.index(destination)))
-                for (int x : search.pathTo(sg.index(destination)))
+            if (search.hasPathTo(sg.index(destination))) {
+                for (int x : search.pathTo(sg.index(destination))) {
                     if (x == sg.index(place)) System.out.print(sg.name(x));
                     else System.out.print("-" + sg.name(x));
-            System.out.println();
+                }
+            } else System.out.println("path not found");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
