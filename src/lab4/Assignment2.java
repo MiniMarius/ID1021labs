@@ -11,6 +11,7 @@ public class Assignment2 {
             String place = scanner.next();
             System.out.println("destination: ");
             String destination = scanner.next();
+
             SymbolGraph sg = new SymbolGraph("usa.txt", " ");
             BreadthFirst search = new BreadthFirst(sg.graph(), sg.index(place));
 
