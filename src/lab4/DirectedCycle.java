@@ -11,12 +11,11 @@ public class DirectedCycle {
     /**
      * Determines whether the digraph has a directed cycle
      */
-    public DirectedCycle(DirectedGraph G) {
+    public DirectedCycle(DirectedGraph G, int v) {
         marked = new boolean[G.V()];
         onStack = new boolean[G.V()];
         edgeTo = new int[G.V()];
-        for (int v = 0; v < G.V(); v++)
-            if (!marked[v] && cycle == null) dfs(G, v);
+        if (!marked[v]) dfs(G, v);
     }
 
     // run DFS and find a directed cycle (if one exists)
