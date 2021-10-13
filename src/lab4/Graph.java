@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.Bag;
 /**
  * class that contains vertices and edges and manipulation of these
  */
-public class Graph {
+public class Graph implements GraphInterface {
 
     private final int V;
     private int E;

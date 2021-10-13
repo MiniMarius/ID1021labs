@@ -8,7 +8,7 @@ public class BreadthFirst {
     private int[] edgeTo;
     private final int s;
 
-    public BreadthFirst(Graph G, int s) {
+    public BreadthFirst(GraphInterface G, int s) {
         this.s = s;
         marked = new boolean[G.V()];
         edgeTo = new int[G.V()];
@@ -17,7 +17,7 @@ public class BreadthFirst {
     }
 
     // breadth-first search from a source s
-    private void bfs(Graph G, int s) {
+    private void bfs(GraphInterface G, int s) {
         Queue<Integer> q = new Queue<Integer>();
         marked[s] = true;
         q.enqueue(s);
@@ -33,6 +33,7 @@ public class BreadthFirst {
             }
         }
     }
+
     public boolean hasPathTo(int v) {
         validateVertex(v);
         return marked[v];

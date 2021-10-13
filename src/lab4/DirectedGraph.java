@@ -1,8 +1,13 @@
 package lab4;
 
 import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.ST;
 
-public class DirectedGraph {
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
+public class DirectedGraph implements GraphInterface {
     private static final String NEWLINE = System.getProperty("line.separator");
 
     private final int V;        // number of vertices in graph
@@ -18,6 +23,29 @@ public class DirectedGraph {
             adj[v] = new Bag<Integer>();
         }
     }
+
+    /**
+     * constructor for assignment 6
+     * Reads a txt file, initializes adj array and fills it up.
+     * @param filename the name of the file to be read
+     * @throws FileNotFoundException if file not found
+     */
+    public DirectedGraph(String filename) throws FileNotFoundException {
+        Scanner in = new Scanner(new FileReader("src/lab4/" + filename));
+        V = in.nextInt();
+        in.nextLine();
+        E = in.nextInt();
+        in.nextLine();
+        adj = (Bag<Integer>[]) new Bag[V];
+        while (in.hasNextLine()) {
+            int v = in.nextInt();
+            int w = in.nextInt();
+            in.nextLine();
+            addEdge(v, w);
+        }
+    }
+
+
     public int V() {
         return V;
     }
@@ -27,10 +55,9 @@ public class DirectedGraph {
     }
 
 
-
     private void validateVertex(int v) {
         if (v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
+            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
     }
 
     public void addEdge(int v, int w) {

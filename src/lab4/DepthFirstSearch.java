@@ -8,40 +8,21 @@ public class DepthFirstSearch {
     private final int s;
 
     //constructor for undirected graph
-    public DepthFirstSearch(Graph G, int s) {
+    public DepthFirstSearch(GraphInterface G, int s) {
         this.s = s;
         edgeTo = new int[G.V()];
         marked = new boolean[G.V()];
         validateVertex(s);
         dfs(G, s);
     }
-    //constructor for Directed graph
-    public DepthFirstSearch(DirectedGraph G, int s) {
-        marked = new boolean[G.V()];
-        edgeTo = new int[G.V()];
-        this.s = s;
-        validateVertex(s);
-        DirectedDfs(G, s);
-    }
 
     // depth first search from v for undirected graph
-    private void dfs(Graph G, int v) {
+    private void dfs(GraphInterface G, int v) {
         marked[v] = true;
         for (int w : G.adj(v)) {
             if (!marked[w]) {
                 edgeTo[w] = v;
                 dfs(G, w);
-            }
-        }
-    }
-
-    // depth first search from v for a directed graph
-    private void DirectedDfs(DirectedGraph G, int v) {
-        marked[v] = true;
-        for (int w : G.adj(v)) {
-            if (!marked[w]) {
-                edgeTo[w] = v;
-                DirectedDfs(G, w);
             }
         }
     }
