@@ -19,7 +19,8 @@ public class DirectedSymbolGraph {
     /**
      * Initializes a Symbol table and reads a txt file, initializes a new graph and does a
      * reverse mapping of graph vertex to string names in symbol table
-     * @param filename the name of the file to open
+     *
+     * @param filename  the name of the file to open
      * @param delimiter the delimiter to use during for splitting the strings
      * @throws FileNotFoundException
      */
@@ -53,6 +54,7 @@ public class DirectedSymbolGraph {
 
     /**
      * checks if symbol table contains the string name
+     *
      * @param s string name to be used for checking in symbol table
      * @return true if name exists in symbol table
      */
@@ -62,6 +64,7 @@ public class DirectedSymbolGraph {
 
     /**
      * Returns the integer associated with name string
+     *
      * @param s the string to use for searhing in symbol table
      * @return index associated with name string
      */
@@ -71,6 +74,7 @@ public class DirectedSymbolGraph {
 
     /**
      * returns the name associated with vertex integer from graph
+     *
      * @param v vertex integer to get name from
      * @return name of vertex
      */
@@ -81,6 +85,7 @@ public class DirectedSymbolGraph {
 
     /**
      * returns underlying graph
+     *
      * @return the underlying graph
      */
     public DirectedGraph digraph() {
@@ -89,6 +94,7 @@ public class DirectedSymbolGraph {
 
     /**
      * Checks that vertex is between 0 and v-1
+     *
      * @param v the vertex to check
      */
     private void validateVertex(int v) {
