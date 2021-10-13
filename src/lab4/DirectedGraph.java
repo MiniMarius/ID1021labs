@@ -26,7 +26,7 @@ public class DirectedGraph implements GraphInterface {
 
     /**
      * constructor for assignment 6
-     * Reads a txt file, initializes adj array and fills it up.
+     * Reads a txt file, initializes adj array + bags in it and fills them up.
      * @param filename the name of the file to be read
      * @throws FileNotFoundException if file not found
      */
@@ -37,6 +37,9 @@ public class DirectedGraph implements GraphInterface {
         E = in.nextInt();
         in.nextLine();
         adj = (Bag<Integer>[]) new Bag[V];
+        for (int v = 0; v < V; v++) {
+            adj[v] = new Bag<Integer>();
+        }
         while (in.hasNextLine()) {
             int v = in.nextInt();
             int w = in.nextInt();
