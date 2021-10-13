@@ -78,6 +78,10 @@ public class SymbolGraph {
         return keys[v];
     }
 
+    /**
+     * returns underlying graph
+     * @return the underlying graph
+     */
     public Graph graph() {
         return graph;
     }
