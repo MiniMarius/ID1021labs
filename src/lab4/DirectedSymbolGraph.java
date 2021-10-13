@@ -6,6 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
+/**
+ * adds a string name to the vertexes of a directed graph
+ * Serves as wrapper around graph-class in order to provide a mapping between the string vertex names and integers
+ */
 public class DirectedSymbolGraph {
     private ST<String, Integer> st;
     private String[] keys;

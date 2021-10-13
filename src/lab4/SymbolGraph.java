@@ -7,7 +7,8 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 /**
- * adds a string symbol key to the indexes of graph
+ * adds a string name to the vertexes of an undirected graph
+ * Serves as wrapper around graph-class in order to provide a mapping between the string vertex names and integers
  */
 public class SymbolGraph {
     private ST<String, Integer> st;
