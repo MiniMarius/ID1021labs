@@ -16,8 +16,8 @@ public class SymbolGraph {
     private Graph graph;
 
     /**
-     * Initializes a SymbolGraph and reads a txt file, initializes a new graph and does a
-     * reverse mapping of graph vertex to string names
+     * Initializes a Symbol table and reads a txt file, initializes a new graph and does a
+     * reverse mapping of graph vertex to string names in symbol table
      * @param filename the name of the file to open
      * @param delimiter the delimiter to use during for splitting the strings
      * @throws FileNotFoundException
