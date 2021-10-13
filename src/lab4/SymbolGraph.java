@@ -15,6 +15,13 @@ public class SymbolGraph {
     private String[] keys;
     private Graph graph;
 
+    /**
+     * Initializes a SymbolGraph and reads a txt file, initializes a new graph and does a
+     * reverse mapping of graph vertex to string names
+     * @param filename the name of the file to open
+     * @param delimiter the delimiter to use during for splitting the strings
+     * @throws FileNotFoundException
+     */
     public SymbolGraph(String filename, String delimiter) throws FileNotFoundException {
         st = new ST<String, Integer>();
         Scanner in = new Scanner(new FileReader("src/lab4/" + filename));
@@ -43,14 +50,29 @@ public class SymbolGraph {
         }
     }
 
+    /**
+     * checks if symbol table contains the string name
+     * @param s string name to be used for checking in symbol table
+     * @return true if name exists in symbol table
+     */
     public boolean contains(String s) {
         return st.contains(s);
     }
 
+    /**
+     * Returns the integer associated with name string
+     * @param s the string to use for searhing in symbol table
+     * @return index associated with name string
+     */
     public int index(String s) {
         return st.get(s);
     }
 
+    /**
+     * returns the name associated with vertex integer from graph
+     * @param v vertex integer to get name from
+     * @return name of vertex
+     */
     public String name(int v) {
         validateVertex(v);
         return keys[v];
@@ -60,6 +82,10 @@ public class SymbolGraph {
         return graph;
     }
 
+    /**
+     * Checks that vertex is between 0 and v-1
+     * @param v the vertex to check
+     */
     private void validateVertex(int v) {
         int V = graph.V();
         if (v < 0 || v >= V)
