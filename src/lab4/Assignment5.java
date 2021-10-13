@@ -1,5 +1,5 @@
 //README this program allows the user to input a starting vertex which is to be checked for if it
-// is contained inside a cycle(loop)
+// is contained inside a cycle(loop). You can change filename variable to chosen file containing a graph/cycle.
 package lab4;
 
 import edu.princeton.cs.algs4.StdOut;
