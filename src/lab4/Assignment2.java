@@ -1,3 +1,6 @@
+//README this program uses BFS to find the path from x to y based on input. Parts of code based off of princeton.
+// Prints a list of vertices
+// traversed from x to y if there is a path
 package lab4;
 
 import java.io.FileNotFoundException;

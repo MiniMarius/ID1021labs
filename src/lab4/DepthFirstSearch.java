@@ -1,3 +1,4 @@
+//README this class implements depth first search.
 package lab4;
 
 import edu.princeton.cs.algs4.Stack;
@@ -7,7 +8,7 @@ public class DepthFirstSearch {
     private int[] edgeTo;
     private final int s;
 
-    //constructor for undirected graph
+    //constructor for graph
     public DepthFirstSearch(GraphInterface G, int s) {
         this.s = s;
         edgeTo = new int[G.V()];
@@ -16,7 +17,7 @@ public class DepthFirstSearch {
         dfs(G, s);
     }
 
-    // depth first search from v for undirected graph
+    // depth first search from v for graph that marks the entire graph for use in hasPathTo
     private void dfs(GraphInterface G, int v) {
         marked[v] = true;
         for (int w : G.adj(v)) {
@@ -27,6 +28,9 @@ public class DepthFirstSearch {
         }
     }
 
+    /**
+     * checks in the boolean array
+     */
     public boolean hasPathTo(int v) {
         validateVertex(v);
         return marked[v];
@@ -34,6 +38,7 @@ public class DepthFirstSearch {
 
     /**
      * Returns a path between the source vertex and vertex v
+     * by connecting edges of
      *
      * @param v the vertex to find a path to
      */
@@ -47,6 +52,10 @@ public class DepthFirstSearch {
         return path;
     }
 
+    /**
+     * Checks that vertex is between 0 and v-1
+     * @param v the vertex to check
+     */
     private void validateVertex(int v) {
         int V = marked.length;
         if (v < 0 || v >= V)

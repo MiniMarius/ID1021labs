@@ -1,3 +1,6 @@
+//README This program finds the shortest path between A and B passing through a node C if such a path exists
+// Uses BFS-search from a starting index to a midpoint, followed by a BFS-search from midpoint to destination
+// i.e A-C-B
 package lab4;
 
 import java.io.FileNotFoundException;

@@ -1,3 +1,5 @@
+//README this program allows the user to find the shortest path between two nodes passing through
+// a third node. Outputs an ordered list of nodes traversed from A to B.
 package lab4;
 
 import java.io.FileNotFoundException;

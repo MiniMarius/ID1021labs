@@ -1,3 +1,5 @@
+//README this program allows the user to input a starting vertex which is to be checked for if it
+// is contained inside a cycle(loop)
 package lab4;
 
 import edu.princeton.cs.algs4.StdOut;

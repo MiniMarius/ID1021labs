@@ -1,3 +1,6 @@
+//README this program uses DFS to find the path from x to y based on input. Parts of code based off of princeton.
+// Prints a list of vertices
+// traversed from x to y if there is a path
 package lab4;
 
 import java.io.FileNotFoundException;
@@ -11,6 +14,7 @@ public class Assignment1 {
             String place = scanner.next();
             System.out.println("destination: ");
             String destination = scanner.next();
+
             SymbolGraph sg = new SymbolGraph("usa.txt", " ");
             DepthFirstSearch search = new DepthFirstSearch(sg.graph(), sg.index(place));
 

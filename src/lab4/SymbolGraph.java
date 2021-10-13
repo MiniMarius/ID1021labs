@@ -32,7 +32,6 @@ public class SymbolGraph {
                     st.put(a[i], st.size());
             }
         }
-
         keys = new String[st.size()];
         for (String name : st.keys()) {
             keys[st.get(name)] = name;
