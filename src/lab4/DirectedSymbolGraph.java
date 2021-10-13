@@ -1,3 +1,4 @@
+//README this class depicts a directed symbol graph
 package lab4;
 
 import edu.princeton.cs.algs4.ST;

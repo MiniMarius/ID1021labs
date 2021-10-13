@@ -1,3 +1,4 @@
+//README this class implements breadth-first search
 package lab4;
 
 import edu.princeton.cs.algs4.Queue;
@@ -8,6 +9,11 @@ public class BreadthFirst {
     private int[] edgeTo;
     private final int s;
 
+    /**
+     * constructor for the class
+     * @param G the graph to search into
+     * @param s the source index to start at
+     */
     public BreadthFirst(GraphInterface G, int s) {
         this.s = s;
         marked = new boolean[G.V()];
@@ -34,6 +40,10 @@ public class BreadthFirst {
         }
     }
 
+    /**
+     * Tells if vertex v has been marked or not
+     * @return the boolean
+     */
     public boolean hasPathTo(int v) {
         validateVertex(v);
         return marked[v];
@@ -54,6 +64,10 @@ public class BreadthFirst {
         return path;
     }
 
+    /**
+     * Checks that vertex is between 0 and v-1
+     * @param v the vertex to check
+     */
     private void validateVertex(int v) {
         int V = marked.length;
         if (v < 0 || v >= V)

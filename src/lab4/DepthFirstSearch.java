@@ -17,7 +17,11 @@ public class DepthFirstSearch {
         dfs(G, s);
     }
 
-    // depth first search from v for graph that marks the entire graph for use in hasPathTo
+    /**
+     * recursive method that uses a depth-first method of marking up the graph
+     * @param G the graph to search into
+     * @param v the vertex to be searched from
+     */
     private void dfs(GraphInterface G, int v) {
         marked[v] = true;
         for (int w : G.adj(v)) {
@@ -29,7 +33,8 @@ public class DepthFirstSearch {
     }
 
     /**
-     * checks in the boolean array
+     * Tells if vertex v has been marked or not
+     * @return the boolean
      */
     public boolean hasPathTo(int v) {
         validateVertex(v);

@@ -1,3 +1,5 @@
+//README this depicts a symbol graph wrapper-type class that wraps around a graph object in order to add
+//strings as mapping between the string vertex names and integers of the graph
 package lab4;
 
 import edu.princeton.cs.algs4.ST;
